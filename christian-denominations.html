@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宗派紹介 — 基督教入門ナビ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400;600&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #b8956a;
+  --gold-light: #d4b483;
+  --parchment: #faf6f0;
+  --ink: #1a1410;
+  --border: rgba(184,149,106,0.18);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--ink);
+  color: var(--parchment);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+.bg-layer {
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%, #2c1f0e 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, #0d1a2a 0%, transparent 60%),
+    linear-gradient(160deg, #0f0b07 0%, #1a1008 40%, #0a1018 100%);
+  z-index: 0;
+}
+.wrap {
+  position: relative; z-index: 1;
+  max-width: 760px; margin: 0 auto;
+  padding: 40px 20px 80px;
+}
+
+/* NAV */
+.nav-row {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+.nav-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 300;
+  color: var(--gold); opacity: 0.7;
+  text-decoration: none; letter-spacing: 0.08em;
+  transition: opacity 0.2s;
+}
+.nav-back:hover { opacity: 1; }
+
+/* HEADER */
+.page-header {
+  text-align: center;
+  padding: 32px 0 32px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 40px;
+}
+.eyebrow {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--gold); opacity: 0.7; margin-bottom: 14px;
+}
+.page-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(26px, 5vw, 40px);
+  font-weight: 300; letter-spacing: 0.04em;
+  color: var(--parchment); line-height: 1.3; margin-bottom: 10px;
+}
+.page-title em { color: var(--gold); font-style: italic; }
+.page-sub {
+  font-size: 13px; font-weight: 300;
+  color: rgba(240,232,218,0.45); letter-spacing: 0.04em;
+}
+
+/* FILTER */
+.filter-bar {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 28px;
+}
+.filter-btn {
+  padding: 6px 16px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 12px; font-weight: 300;
+  color: rgba(240,232,218,0.45);
+  cursor: pointer; letter-spacing: 0.04em;
+  transition: all 0.2s ease;
+}
+.filter-btn:hover { border-color: var(--gold); color: rgba(240,232,218,0.8); }
+.filter-btn.active {
+  border-color: var(--gold);
+  background: rgba(184,149,106,0.12);
+  color: var(--gold);
+}
+
+/* DENOM CARD */
+.denom-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 32px 32px 28px;
+  margin-bottom: 16px;
+  position: relative;
+  animation: slideUp 0.4s cubic-bezier(0.4,0,0.2,1) both;
+  transition: border-color 0.2s;
+}
+.denom-card:hover { border-color: rgba(184,149,106,0.35); }
+.denom-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 40px; right: 40px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.3;
+}
+
+@media (max-width: 560px) {
+  .denom-card { padding: 24px 18px 20px; }
+}
+
+.card-head {
+  display: flex; gap: 16px; align-items: flex-start;
+  margin-bottom: 16px;
+}
+.card-icon { font-size: 36px; opacity: 0.8; flex-shrink: 0; line-height: 1; }
+.card-title-wrap { flex: 1; }
+.card-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(20px, 4vw, 26px); font-weight: 400;
+  color: var(--parchment); letter-spacing: 0.03em;
+}
+.card-tagline {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 12px; font-weight: 300;
+  margin-top: 4px; font-style: italic;
+}
+
+.card-desc {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 13px; font-weight: 300;
+  line-height: 1.9; color: rgba(240,232,218,0.68);
+  margin-bottom: 16px; letter-spacing: 0.03em;
+}
+
+.card-tags {
+  display: flex; flex-wrap: wrap; gap: 7px;
+  margin-bottom: 20px;
+}
+.tag {
+  padding: 4px 13px;
+  border: 1px solid rgba(184,149,106,0.25);
+  border-radius: 20px;
+  font-size: 11px; font-weight: 300;
+  color: var(--gold-light); opacity: 0.85;
+  letter-spacing: 0.04em;
+}
+
+/* STEPS */
+.card-steps {
+  background: rgba(184,149,106,0.05);
+  border: 1px solid rgba(184,149,106,0.12);
+  border-radius: 2px;
+  padding: 18px 20px;
+  margin-bottom: 18px;
+}
+.steps-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold); opacity: 0.6;
+  margin-bottom: 12px;
+}
+.steps-list {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 9px;
+}
+.steps-list li {
+  font-size: 12px; font-weight: 300;
+  color: rgba(240,232,218,0.65);
+  line-height: 1.6; padding-left: 18px;
+  position: relative; letter-spacing: 0.02em;
+}
+.steps-list li::before {
+  content: '✝';
+  position: absolute; left: 0;
+  color: var(--gold); font-size: 9px; top: 3px; opacity: 0.55;
+}
+
+/* OFFICIAL LINK */
+.official-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 18px;
+  border: 1px solid rgba(184,149,106,0.3);
+  border-radius: 2px;
+  font-size: 12px; font-weight: 300;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+  opacity: 0.8;
+}
+.official-link:hover { opacity: 1; }
+
+/* BOTTOM NAV */
+.bottom-nav {
+  display: flex; flex-direction: column; gap: 10px;
+  margin-top: 40px;
+}
+.btn-primary {
+  display: block; width: 100%;
+  padding: 16px 28px;
+  background: linear-gradient(135deg, var(--gold) 0%, #9a7a50 100%);
+  border: none; border-radius: 2px;
+  font-family: 'Noto Serif JP', serif;
+  font-size: 15px; font-weight: 400;
+  color: var(--ink); cursor: pointer;
+  letter-spacing: 0.06em; text-decoration: none;
+  text-align: center; transition: all 0.3s ease;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(184,149,106,0.25); }
+.btn-secondary {
+  display: block; width: 100%;
+  padding: 13px 28px;
+  background: transparent;
+  border: 1px solid rgba(184,149,106,0.3);
+  border-radius: 2px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 13px; font-weight: 300;
+  color: rgba(240,232,218,0.6);
+  cursor: pointer; letter-spacing: 0.05em;
+  text-decoration: none; text-align: center;
+  transition: all 0.3s ease;
+}
+.btn-secondary:hover { border-color: rgba(184,149,106,0.6); color: var(--parchment); }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+<div class="bg-layer"></div>
+<div class="wrap">
+
+  <nav class="nav-row">
+    <a href="index.html" class="nav-back">← 診断トップに戻る</a>
+    <a href="christian-matrix.html" class="nav-back" style="margin-left:auto;">教義比較表 →</a>
+  </nav>
+
+  <header class="page-header">
+    <p class="eyebrow">Denomination Guide</p>
+    <h1 class="page-title">基督教<em>宗派案内</em></h1>
+    <p class="page-sub">8つの宗派・スタイルを、礼拝・神学・入門ステップから紹介する</p>
+  </header>
+
+  <div class="filter-bar" id="filter-bar"></div>
+  <div id="denom-list"></div>
+
+  <div class="bottom-nav">
+    <a href="index.html" class="btn-primary">診断をはじめる</a>
+    <a href="christian-matrix.html" class="btn-secondary">≡ 教義を比較する</a>
+  </div>
+
+</div>
+
+<script>
+const denominations = [
+  {
+    key: "catholic",
+    name: "カトリック教会",
+    tagline: "—— 2千年の歴史と普遍的な共同体",
+    icon: "⛪",
+    color: "#4a6e8a",
+    category: "典礼派",
+    desc: "使徒継承に基づく権威と、秘跡（洗礼・聖体・告解など）を通じた恵みの付与を重視。教皇を頂点とする明確な教義体系を持つ。典礼は荘厳で美しく、知的な神学的伝統（トマス・アクィナスなど）も豊か。日本では上智大学や多くの病院・学校が母体。",
+    tags: ["典礼の荘厳さ", "明確な教義", "使徒継承", "社会的使命", "哲学的神学"],
+    url: "https://www.cbcj.catholic.jp/",
+    urlLabel: "カトリック中央協議会",
+    steps: [
+      "RCIA（成人入門講座）を開催している近隣のカトリック教会に問い合わせる",
+      "まず「ミサ」（日曜礼拝）に見学として参加する（参加は自由）",
+      "読書：カルカン『カトリック要理』または『カトリック教会のカテキズム』",
+      "上智大学神学部や聖イグナチオ教会（東京）の公開講座を活用する",
+    ]
+  },
+  {
+    key: "orthodox",
+    name: "東方正教会",
+    tagline: "—— 原初の伝統と神秘的な礼拝",
+    icon: "☦",
+    color: "#6e4a2d",
+    category: "典礼派",
+    desc: "1054年の東西分裂以前の「公会議的」な信仰を継承。ビザンティン聖歌、イコン、長大な礼拝は独特の神秘的な雰囲気を持つ。神学は「テオーシス（神化）」——人間が神の性質に与るプロセス——を中心に据える。日本ではニコライ堂（東京）が拠点。",
+    tags: ["神秘的体験", "イコン・聖歌", "テオーシス", "公会議的権威", "豊かな典礼暦"],
+    url: "https://www.orthodoxjapan.jp/",
+    urlLabel: "日本正教会",
+    steps: [
+      "ニコライ堂（東京・神田）の主日奉神礼（礼拝）を見学する",
+      "正教会の入門書「正教会について」（日本正教会刊）を入手する",
+      "洗礼準備は通常数ヶ月〜1年の教理問答（カテキズム）を経る",
+      "正教の霊性：『正教会の信仰と礼拝』（セラフィム・ローズ著）を読む",
+    ]
+  },
+  {
+    key: "anglican",
+    name: "聖公会（アングリカン）",
+    tagline: "—— 包容力と伝統の知的バランス",
+    icon: "✟",
+    color: "#2d5a3d",
+    category: "中道派",
+    desc: "「聖書・伝統・理性」の三本柱を重んじる。典礼はカトリック的荘厳さとプロテスタントの信仰義認を融合し、神学的多様性（保守〜リベラル）を内包する。英国国教会を母体に、日本聖公会として展開。知識人・思索者に親しみやすい雰囲気。",
+    tags: ["神学的包容性", "典礼の品位", "理性的信仰", "伝統と改革", "社会参与"],
+    url: "https://www.nskk.org/",
+    urlLabel: "日本聖公会",
+    steps: [
+      "日本聖公会の近隣の教会に問い合わせ、主日聖餐式を見学する",
+      "読書：C.S.ルイス『キリスト教の精髄（Mere Christianity）』",
+      "アルファコース（聖公会系でも開催）への参加",
+      "受洗準備クラスへの参加（通常3〜6ヶ月）",
+    ]
+  },
+  {
+    key: "lutheran",
+    name: "ルーテル派",
+    tagline: "—— 恵みのみ、信仰のみ、聖書のみ",
+    icon: "✠",
+    color: "#5a3d2d",
+    category: "中道派",
+    desc: "マルティン・ルターの宗教改革から生まれた宗派。「信仰義認」——行いではなく信仰によって義と認められる——を核心に据える。典礼は保持しつつも聖書の権威を最優先。バッハの音楽など知的・文化的伝統も豊富。日本福音ルーテル教会が母体。",
+    tags: ["信仰義認", "恵みの神学", "聖書の権威", "典礼保持", "知的誠実さ"],
+    url: "https://jelc.or.jp/",
+    urlLabel: "日本福音ルーテル教会",
+    steps: [
+      "日本福音ルーテル教会（JELC）の近隣教会を探して礼拝に参加する",
+      "読書：ルター『キリスト者の自由』（岩波文庫）",
+      "ルーテル学院大学（東京）の公開講座を確認する",
+      "洗礼準備クラス（通常数ヶ月）に参加する",
+    ]
+  },
+  {
+    key: "reformed",
+    name: "改革派・長老教会",
+    tagline: "—— 神の主権と知性的な信仰",
+    icon: "✝",
+    color: "#2d3d5a",
+    category: "プロテスタント",
+    desc: "カルヴァンの神学を継承し、「神の絶対的主権」と「予定説」を強調する。説教中心の礼拝、信仰問答（ハイデルベルク、ウェストミンスター）による教理教育、長老制による教会統治が特徴。知的・組織的なアプローチで信仰を構築したい人に向く。",
+    tags: ["神の主権", "予定説", "教義的厳格さ", "説教中心", "知性的信仰"],
+    url: "https://www.rcj.gr.jp/",
+    urlLabel: "日本キリスト改革派教会",
+    steps: [
+      "日本基督改革派教会または日本長老教会の礼拝を訪問する",
+      "読書：カルヴァン『キリスト教綱要』（入門版あり）またはウェストミンスター小教理問答",
+      "改革派の入門書：R.C.スプロール著などを読む",
+      "オンライン：Ligonier Ministries（日本語コンテンツあり）を活用する",
+    ]
+  },
+  {
+    key: "evangelical",
+    name: "福音派（エバンジェリカル）",
+    tagline: "—— 個人の回心と聖書中心の信仰",
+    icon: "✙",
+    color: "#5a4a2d",
+    category: "プロテスタント",
+    desc: "「福音（ゴスペル）」による個人の回心・重生（Born Again）を核心に置く。聖書の権威を重視しつつも、教派を超えた信仰の実践性を重んじる。礼拝スタイルは多様で、コンテンポラリー礼拝から伝統的なスタイルまで幅広い。日本では日本同盟基督教団など。",
+    tags: ["個人の回心", "聖書中心", "実践的信仰", "宣教の使命", "教派横断的"],
+    url: "https://www.jeca.or.jp/",
+    urlLabel: "日本同盟基督教団",
+    steps: [
+      "アルファコース（Alpha Course）を開催している教会を探して参加する",
+      "読書：ティム・ケラー『神を求める理由』など",
+      "地域の福音派教会（バプテスト、同盟基督など）の礼拝に参加する",
+      "YouVersion Bible App（日本語聖書付き）で聖書通読を始める",
+    ]
+  },
+  {
+    key: "pentecostal",
+    name: "ペンテコステ・カリスマ派",
+    tagline: "—— 聖霊の体験と生きた礼拝",
+    icon: "🔥",
+    color: "#6e2d2d",
+    category: "体験派",
+    desc: "聖霊の働き——異言、癒し、預言——を現代でも継続する恵みとして重視する。礼拝は感情的・体験的で、音楽・祈りへの積極的な参加が求められる。理論より体験から入る求道者に向く。日本では日本福音ペンテコステ教団など。",
+    tags: ["聖霊の体験", "活発な礼拝", "癒しと預言", "感情的参与", "宣教的熱気"],
+    url: "https://jgpc.jimdofree.com/",
+    urlLabel: "日本福音ペンテコステ教団",
+    steps: [
+      "ペンテコステ系・カリスマ系教会の礼拝（日曜）に参加して体験する",
+      "読書：ゴードン・フィー『聖霊と神の民』など",
+      "ホームセル（家庭集会）に招待してもらえるか教会に問い合わせる",
+      "Hillsong、Bethel Musicなどのワーシップミュージックで親しむ",
+    ]
+  },
+  {
+    key: "solo",
+    name: "独学・個人帰依スタイル",
+    tagline: "—— 組織より先に、まず神と向き合う",
+    icon: "📖",
+    color: "#5a5a5a",
+    category: "独学",
+    desc: "特定の宗派に入る前に、まず自分で聖書を読み、神学を学び、信仰の輪郭を自分で確かめたい——そういう気質を持つ人がいる。これは弱さではなく、知性的誠実さの表れだ。良質な書籍・オンライン資源を使いながら、必要に応じて複数の教会を訪問する「巡礼的」アプローチが向く。",
+    tags: ["独学・知的探究", "複数宗派の比較", "組織帰属を急がない", "自律的信仰形成", "文献中心"],
+    url: "https://uccj.org/",
+    urlLabel: "日本基督教団（入門として）",
+    steps: [
+      "まず聖書を通読する（新約聖書から。新改訳2017または新共同訳）",
+      "読書：C.S.ルイス『驚かされた喜び』、マクグラス『キリスト教神学入門』",
+      "複数の宗派の礼拝を「見学者」として訪問し比較する",
+      "ティム・ケラー『懐疑する人のための神』——信仰の知的障壁を丁寧に論じた良著",
+    ]
+  },
+];
+
+const categories = ['すべて', '典礼派', '中道派', 'プロテスタント', '体験派', '独学'];
+let activeCategory = 'すべて';
+
+function renderFilter() {
+  const bar = document.getElementById('filter-bar');
+  categories.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (cat === activeCategory ? ' active' : '');
+    btn.textContent = cat;
+    btn.onclick = () => {
+      activeCategory = cat;
+      document.querySelectorAll('.filter-btn').forEach((b, i) => {
+        b.className = 'filter-btn' + (categories[i] === activeCategory ? ' active' : '');
+      });
+      renderList();
+    };
+    bar.appendChild(btn);
+  });
+}
+
+function renderList() {
+  const list = document.getElementById('denom-list');
+  const filtered = activeCategory === 'すべて'
+    ? denominations
+    : denominations.filter(d => d.category === activeCategory);
+
+  list.innerHTML = '';
+  filtered.forEach((d, i) => {
+    const card = document.createElement('div');
+    card.className = 'denom-card';
+    card.style.animationDelay = `${i * 0.05}s`;
+    card.style.borderColor = d.color + '40';
+
+    card.innerHTML = `
+      <div class="card-head">
+        <span class="card-icon">${d.icon}</span>
+        <div class="card-title-wrap">
+          <p class="card-name">${d.name}</p>
+          <p class="card-tagline" style="color:${d.color}">${d.tagline}</p>
+        </div>
+      </div>
+      <p class="card-desc">${d.desc}</p>
+      <div class="card-tags">
+        ${d.tags.map(t => `<span class="tag" style="border-color:${d.color}50; color:${d.color}">${t}</span>`).join('')}
+      </div>
+      <div class="card-steps">
+        <p class="steps-label">入門ステップ</p>
+        <ul class="steps-list">
+          ${d.steps.map(s => `<li>${s}</li>`).join('')}
+        </ul>
+      </div>
+      <a href="${d.url}" target="_blank" rel="noopener noreferrer"
+        class="official-link"
+        style="color:${d.color}; border-color:${d.color}50;"
+        onmouseover="this.style.background='${d.color}15'"
+        onmouseout="this.style.background='transparent'">
+        ✝ ${d.urlLabel} →
+      </a>
+    `;
+    list.appendChild(card);
+  });
+}
+
+renderFilter();
+renderList();
+</script>
+</body>
+</html>

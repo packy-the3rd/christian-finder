@@ -569,6 +569,10 @@
       直感で選んでください。
     </p>
     <button class="btn-primary" onclick="startQuiz()">診断をはじめる</button>
+    <div style="display:flex; flex-direction:column; gap:10px; margin-top:10px;">
+      <a href="christian-denominations.html" class="btn-secondary" style="text-align:center; text-decoration:none; display:block;">✝ 宗派を一覧で見る</a>
+      <a href="christian-matrix.html" class="btn-secondary" style="text-align:center; text-decoration:none; display:block;">≡ 教義を比較する</a>
+    </div>
   </div>
 
   <!-- QUIZ SCREEN -->
@@ -781,6 +785,8 @@ const denominations = {
     color: "#4a6e8a",
     desc: "使徒継承に基づく権威と、秘跡（洗礼・聖体・告解など）を通じた恵みの付与を重視。教皇を頂点とする明確な教義体系を持つ。典礼は荘厳で美しく、知的な神学的伝統（トマス・アクィナスなど）も豊か。日本では上智大学や多くの病院・学校が母体。",
     tags: ["典礼の荘厳さ", "明確な教義", "使徒継承", "社会的使命", "哲学的神学"],
+    url: "https://www.cbcj.catholic.jp/",
+    urlLabel: "カトリック中央協議会",
     steps: [
       "RCIA（成人入門講座）を開催している近隣のカトリック教会に問い合わせる",
       "まず「ミサ」（日曜礼拝）に見学として参加する（参加は自由）",
@@ -795,6 +801,8 @@ const denominations = {
     color: "#6e4a2d",
     desc: "1054年の東西分裂以前の「公会議的」な信仰を継承。ビザンティン聖歌、イコン、長大な礼拝は独特の神秘的な雰囲気を持つ。神学は「テオーシス（神化）」——人間が神の性質に与るプロセス——を中心に据える。日本ではニコライ堂（東京）が拠点。",
     tags: ["神秘的体験", "イコン・聖歌", "テオーシス", "公会議的権威", "豊かな典礼暦"],
+    url: "https://www.orthodoxjapan.jp/",
+    urlLabel: "日本正教会",
     steps: [
       "ニコライ堂（東京・神田）の主日奉神礼（礼拝）を見学する",
       "正教会の入門書「正教会について」（日本正教会刊）を入手する",
@@ -809,6 +817,8 @@ const denominations = {
     color: "#2d5a3d",
     desc: "「聖書・伝統・理性」の三本柱を重んじる。典礼はカトリック的荘厳さとプロテスタントの信仰義認を融合し、神学的多様性（保守〜リベラル）を内包する。英国国教会を母体に、日本聖公会として展開。知識人・思索者に親しみやすい雰囲気。",
     tags: ["神学的包容性", "典礼の品位", "理性的信仰", "伝統と改革", "社会参与"],
+    url: "https://www.nskk.org/",
+    urlLabel: "日本聖公会",
     steps: [
       "日本聖公会の近隣の教会に問い合わせ、主日聖餐式を見学する",
       "読書：C.S.ルイス『キリスト教の精髄（Mere Christianity）』",
@@ -823,6 +833,8 @@ const denominations = {
     color: "#5a3d2d",
     desc: "マルティン・ルターの宗教改革から生まれた宗派。「信仰義認」——行いではなく信仰によって義と認められる——を核心に据える。典礼は保持しつつも聖書の権威を最優先。バッハの音楽、ハイデルベルク問答など知的・文化的伝統も豊富。日本福音ルーテル教会が母体。",
     tags: ["信仰義認", "恵みの神学", "聖書の権威", "典礼保持", "知的誠実さ"],
+    url: "https://jelc.or.jp/",
+    urlLabel: "日本福音ルーテル教会",
     steps: [
       "日本福音ルーテル教会（JELC）の近隣教会を探して礼拝に参加する",
       "読書：ルター『キリスト者の自由』（岩波文庫）",
@@ -837,6 +849,8 @@ const denominations = {
     color: "#2d3d5a",
     desc: "カルヴァンの神学を継承し、「神の絶対的主権」と「予定説」を強調する。説教中心の礼拝、信仰問答（ハイデルベルク、ウェストミンスター）による教理教育、長老制による教会統治が特徴。知的・組織的なアプローチで信仰を構築したい人に向く。",
     tags: ["神の主権", "予定説", "教義的厳格さ", "説教中心", "知性的信仰"],
+    url: "https://www.rcj.gr.jp/",
+    urlLabel: "日本キリスト改革派教会",
     steps: [
       "日本基督改革派教会または日本長老教会の礼拝を訪問する",
       "読書：カルヴァン『キリスト教綱要』（入門版あり）またはウェストミンスター小教理問答",
@@ -851,6 +865,8 @@ const denominations = {
     color: "#5a4a2d",
     desc: "「福音（ゴスペル）」による個人の回心・重生（Born Again）を核心に置く。聖書の権威を重視しつつも、教派を超えた信仰の実践性を重んじる。礼拝スタイルは多様で、コンテンポラリー礼拝から伝統的なスタイルまで幅広い。日本では日本同盟基督教団など。",
     tags: ["個人の回心", "聖書中心", "実践的信仰", "宣教の使命", "教派横断的"],
+    url: "https://www.jeca.or.jp/",
+    urlLabel: "日本同盟基督教団",
     steps: [
       "アルファコース（Alpha Course）を開催している教会を探して参加する",
       "読書：スタントン・ジョーンズ『キリスト教とは何か』またはティム・ケラー『神を求める理由』",
@@ -865,6 +881,8 @@ const denominations = {
     color: "#6e2d2d",
     desc: "聖霊の働き——異言、癒し、預言——を現代でも継続する恵みとして重視する。礼拝は感情的・体験的で、音楽・祈りへの積極的な参加が求められる。理論より体験から入る求道者に向く。日本ではYokohamaのInternational Christian Assembly（ICA）やフィラデルフィア教会など。",
     tags: ["聖霊の体験", "活発な礼拝", "癒しと預言", "感情的参与", "宣教的熱気"],
+    url: "https://jgpc.jimdofree.com/",
+    urlLabel: "日本福音ペンテコステ教団",
     steps: [
       "ペンテコステ系・カリスマ系教会の礼拝（日曜）に参加して体験する",
       "読書：ゴードン・フィー『聖霊と神の民』または書かれた神の言葉の学び",
@@ -879,6 +897,8 @@ const denominations = {
     color: "#3d3d3d",
     desc: "特定の宗派に入る前に、まず自分で聖書を読み、神学を学び、信仰の輪郭を自分で確かめたい——そういう気質を持つ人がいる。これは弱さではなく、知性的誠実さの表れだ。良質な書籍・オンライン資源を使いながら、必要に応じて複数の教会を訪問する「巡礼的」アプローチが向く。",
     tags: ["独学・知的探究", "複数宗派の比較", "組織帰属を急がない", "自律的信仰形成", "文献中心"],
+    url: "https://uccj.org/",
+    urlLabel: "日本基督教団（入門として）",
     steps: [
       "まず聖書を通読する（新約聖書から。新改訳2017または新共同訳）",
       "読書：C.S.ルイス『驚かされた喜び』、アリスター・マクグラス『キリスト教神学入門』",
@@ -1032,9 +1052,12 @@ function showAllDenominations() {
         </div>
       </div>
       <p style="font-family:'Noto Sans JP',sans-serif; font-size:13px; font-weight:300; line-height:1.8; color:rgba(240,232,218,0.65); margin-bottom:14px; letter-spacing:0.03em">${d.desc}</p>
-      <div style="display:flex; flex-wrap:wrap; gap:6px">
+      <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px">
         ${d.tags.map(t => `<span class="tag" style="border-color:${d.color}50; color:${d.color}">${t}</span>`).join('')}
       </div>
+      <a href="${d.url}" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:8px; padding:9px 18px; border:1px solid ${d.color}60; border-radius:2px; font-family:'Noto Sans JP',sans-serif; font-size:12px; font-weight:300; color:${d.color}; text-decoration:none; letter-spacing:0.05em; transition:all 0.2s ease; opacity:0.85;" onmouseover="this.style.opacity='1'; this.style.background='${d.color}15'" onmouseout="this.style.opacity='0.85'; this.style.background='transparent'">
+        ✝ ${d.urlLabel} →
+      </a>
     </div>
   `).join('');
   show('screen-all');
