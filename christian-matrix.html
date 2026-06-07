@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>教義比較マトリクス — 基督教入門ナビ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400;600&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #b8956a;
+  --gold-light: #d4b483;
+  --parchment: #faf6f0;
+  --parchment-dim: rgba(240,232,218,0.75);
+  --parchment-faint: rgba(240,232,218,0.45);
+  --ink: #1a1410;
+  --card-bg: rgba(255,255,255,0.03);
+  --border: rgba(184,149,106,0.18);
+
+  --c-catholic: #4a6e8a;
+  --c-orthodox: #8a6040;
+  --c-anglican: #2d5a3d;
+  --c-lutheran: #7a5a3d;
+  --c-reformed: #3d4a7a;
+  --c-evangelical: #7a6a3d;
+  --c-pentecostal: #8a3d3d;
+  --c-solo: #5a5a5a;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: var(--ink);
+  color: var(--parchment);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.bg-layer {
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%, #2c1f0e 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 100% 100%, #0d1a2a 0%, transparent 60%),
+    linear-gradient(160deg, #0f0b07 0%, #1a1008 40%, #0a1018 100%);
+  z-index: 0;
+}
+
+.wrap {
+  position: relative; z-index: 1;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+}
+
+/* HEADER */
+.page-header {
+  text-align: center;
+  padding: 40px 0 36px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 40px;
+}
+.eyebrow {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--gold); opacity: 0.7; margin-bottom: 14px;
+}
+.page-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(26px, 5vw, 42px);
+  font-weight: 300; letter-spacing: 0.04em; color: var(--parchment);
+  line-height: 1.3; margin-bottom: 10px;
+}
+.page-title em { color: var(--gold); font-style: italic; }
+.page-sub {
+  font-size: 13px; font-weight: 300;
+  color: var(--parchment-faint); letter-spacing: 0.04em;
+}
+
+/* NAV LINK */
+.nav-back {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 300;
+  color: var(--gold); opacity: 0.7;
+  text-decoration: none; letter-spacing: 0.08em;
+  margin-bottom: 32px;
+  transition: opacity 0.2s;
+}
+.nav-back:hover { opacity: 1; }
+
+/* FILTER BAR */
+.filter-bar {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 32px;
+}
+.filter-btn {
+  padding: 7px 16px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 12px; font-weight: 300;
+  color: var(--parchment-faint);
+  cursor: pointer; letter-spacing: 0.04em;
+  transition: all 0.2s ease;
+}
+.filter-btn:hover { border-color: var(--gold); color: var(--parchment-dim); }
+.filter-btn.active {
+  border-color: var(--gold);
+  background: rgba(184,149,106,0.12);
+  color: var(--gold);
+}
+
+/* SECTION LABEL */
+.section-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--gold); opacity: 0.55;
+  margin-bottom: 20px;
+}
+
+/* DENOMINATION HEADER ROW */
+.denom-header {
+  display: grid;
+  grid-template-columns: 200px repeat(8, 1fr);
+  gap: 0;
+  margin-bottom: 2px;
+  position: sticky; top: 0; z-index: 10;
+  background: #0f0b07;
+  border-bottom: 1px solid var(--border);
+  padding: 12px 0 10px;
+}
+.denom-header-cell {
+  text-align: center;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 11px; font-weight: 400;
+  letter-spacing: 0.02em;
+  padding: 0 4px;
+  line-height: 1.4;
+}
+.denom-header-cell .denom-icon { font-size: 16px; display: block; margin-bottom: 4px; }
+.denom-header-cell .denom-abbr { font-size: 10px; opacity: 0.65; }
+
+/* THEME GROUP */
+.theme-group { margin-bottom: 32px; }
+.theme-group-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px; font-weight: 400;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--gold); opacity: 0.55;
+  padding: 8px 0 6px;
+  border-top: 1px solid rgba(184,149,106,0.1);
+  margin-bottom: 4px;
+}
+
+/* MATRIX ROW */
+.matrix-row {
+  display: grid;
+  grid-template-columns: 200px repeat(8, 1fr);
+  gap: 0;
+  border-bottom: 1px solid rgba(184,149,106,0.07);
+  transition: background 0.15s;
+  animation: fadeIn 0.3s ease both;
+}
+.matrix-row:hover { background: rgba(184,149,106,0.04); }
+
+.row-label {
+  padding: 14px 12px 14px 0;
+  display: flex; flex-direction: column; justify-content: center; gap: 3px;
+}
+.row-label-main {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 13px; font-weight: 400;
+  color: var(--parchment-dim);
+  line-height: 1.4;
+}
+.row-label-sub {
+  font-size: 11px; font-weight: 300;
+  color: var(--parchment-faint);
+  line-height: 1.4;
+}
+
+.matrix-cell {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 12px 4px;
+  gap: 4px;
+  position: relative;
+}
+
+/* STARS */
+.stars {
+  display: flex; gap: 2px;
+  justify-content: center;
+}
+.star {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.star.filled { opacity: 0.9; }
+.star.empty { background: rgba(255,255,255,0.08); }
+
+/* CELL NOTE */
+.cell-note {
+  font-size: 9px; font-weight: 300;
+  color: var(--parchment-faint);
+  text-align: center;
+  line-height: 1.3;
+  max-width: 70px;
+}
+
+/* TOOLTIP */
+.matrix-cell:hover .cell-tooltip { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.cell-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%; transform: translateX(-50%) translateY(4px);
+  background: #1e1a14;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 10px 14px;
+  min-width: 180px; max-width: 220px;
+  z-index: 100;
+  opacity: 0; pointer-events: none;
+  transition: all 0.2s ease;
+}
+.cell-tooltip-title {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 11px; font-weight: 400;
+  color: var(--gold); margin-bottom: 6px;
+}
+.cell-tooltip-body {
+  font-size: 11px; font-weight: 300;
+  color: var(--parchment-dim); line-height: 1.6;
+}
+
+/* LEGEND */
+.legend {
+  display: flex; flex-wrap: wrap; gap: 20px;
+  margin-top: 40px; padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.legend-item {
+  display: flex; align-items: center; gap: 10px;
+}
+.legend-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+}
+.legend-label {
+  font-size: 11px; font-weight: 300;
+  color: var(--parchment-faint); letter-spacing: 0.03em;
+}
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+  .denom-header { grid-template-columns: 120px repeat(8, 1fr); }
+  .matrix-row { grid-template-columns: 120px repeat(8, 1fr); }
+  .row-label-main { font-size: 11px; }
+  .denom-header-cell .denom-abbr { display: none; }
+  .star { width: 6px; height: 6px; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.btn-primary {
+  display: inline-block;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, var(--gold) 0%, #9a7a50 100%);
+  border: none; border-radius: 2px;
+  font-family: 'Noto Serif JP', serif;
+  font-size: 14px; font-weight: 400;
+  color: var(--ink); cursor: pointer;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-top: 32px;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(184,149,106,0.25); }
+</style>
+</head>
+<body>
+<div class="bg-layer"></div>
+
+<div class="wrap">
+
+  <a href="index.html" class="nav-back">← 診断ツールに戻る</a>
+
+  <header class="page-header">
+    <p class="eyebrow">Doctrine Comparison Matrix</p>
+    <h1 class="page-title">教義<em>近接度</em>マトリクス</h1>
+    <p class="page-sub">10の神学的テーマで、8宗派の立場を横断比較する</p>
+  </header>
+
+  <!-- FILTER -->
+  <div class="section-label">テーマを絞り込む</div>
+  <div class="filter-bar" id="filter-bar"></div>
+
+  <!-- DENOM HEADER -->
+  <div class="denom-header">
+    <div></div>
+    <div class="denom-header-cell"><span class="denom-icon">⛪</span><span class="denom-abbr">カトリック</span></div>
+    <div class="denom-header-cell"><span class="denom-icon">☦</span><span class="denom-abbr">正教会</span></div>
+    <div class="denom-header-cell"><span class="denom-icon">✟</span><span class="denom-abbr">聖公会</span></div>
+    <div class="denom-header-cell"><span class="denom-icon">✠</span><span class="denom-abbr">ルーテル</span></div>
+    <div class="denom-header-cell"><span class="denom-icon">✝</span><span class="denom-abbr">改革派</span></div>
+    <div class="denom-header-cell"><span class="denom-icon">✙</span><span class="denom-abbr">福音派</span></div>
+    <div class="denom-header-cell"><span class="denom-icon">🔥</span><span class="denom-abbr">ペンテコステ</span></div>
+    <div class="denom-header-cell"><span class="denom-icon">📖</span><span class="denom-abbr">独学</span></div>
+  </div>
+
+  <!-- MATRIX -->
+  <div id="matrix-body"></div>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--c-catholic)"></div><span class="legend-label">カトリック</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--c-orthodox)"></div><span class="legend-label">東方正教会</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--c-anglican)"></div><span class="legend-label">聖公会</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--c-lutheran)"></div><span class="legend-label">ルーテル派</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--c-reformed)"></div><span class="legend-label">改革派</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--c-evangelical)"></div><span class="legend-label">福音派</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--c-pentecostal)"></div><span class="legend-label">ペンテコステ</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--c-solo)"></div><span class="legend-label">独学スタイル</span></div>
+  </div>
+
+  <div style="text-align:center">
+    <a href="index.html" class="btn-primary">← 宗派診断に戻る</a>
+  </div>
+
+</div>
+
+<script>
+// ===== COLOR MAP =====
+const colors = {
+  catholic:    'var(--c-catholic)',
+  orthodox:    'var(--c-orthodox)',
+  anglican:    'var(--c-anglican)',
+  lutheran:    'var(--c-lutheran)',
+  reformed:    'var(--c-reformed)',
+  evangelical: 'var(--c-evangelical)',
+  pentecostal: 'var(--c-pentecostal)',
+  solo:        'var(--c-solo)',
+};
+const denomKeys = ['catholic','orthodox','anglican','lutheran','reformed','evangelical','pentecostal','solo'];
+
+// ===== MATRIX DATA =====
+// scores: 1-5, tooltip: short explanation per denomination
+const themes = [
+  {
+    category: "霊的世界観",
+    rows: [
+      {
+        id: "devil",
+        label: "悪魔・霊的戦い",
+        sub: "人格的悪の実在をどう位置づけるか",
+        scores: {
+          catholic:    { val: 3, note: "悪の実在を認めるが「善の欠如」と捉える。エクソシズムも存在するが慎重" },
+          orthodox:    { val: 4, note: "悪霊の存在を強く意識。典礼や祈禱に霊的戦いの要素が組み込まれている" },
+          anglican:    { val: 2, note: "象徴的・神話的に読む傾向が強い。文字通りの悪魔論は一般的でない" },
+          lutheran:    { val: 2, note: "ルターは悪魔を現実の存在と捉えたが、現代のルーテル神学は慎重" },
+          reformed:    { val: 2, note: "神の主権の下に悪は限定的に存在するという整理。日常的な霊的戦いは強調しない" },
+          evangelical: { val: 4, note: "霊的戦いを現実として意識。悪魔の働きを日常信仰の中で語ることが多い" },
+          pentecostal: { val: 5, note: "悪霊追い出し・霊的戦いを礼拝・実践の中心的要素として積極的に取り組む" },
+          solo:        { val: 1, note: "悪魔言語に距離を置く傾向が高い。象徴・神話として読む" },
+        }
+      },
+      {
+        id: "miracle",
+        label: "奇跡・癒し・預言",
+        sub: "聖霊の超自然的働きを現代に認めるか",
+        scores: {
+          catholic:    { val: 3, note: "秘跡を通じた聖霊の働きを認める。個人的な癒しの奇跡も否定しないが慎重" },
+          orthodox:    { val: 4, note: "聖人・イコンを通じた奇跡を正式に認める。聖霊の働きを典礼全体で体験する" },
+          anglican:    { val: 2, note: "可能性は否定しないが、感情的熱狂には懐疑的。理性的バランスを重視" },
+          lutheran:    { val: 2, note: "「奇跡的恵銀の時代は聖書の成立で閉じた」という立場（cessationist）が主流" },
+          reformed:    { val: 1, note: "恵銀中止論（cessationism）を原則とする。超自然的賜物は使徒時代で終了とする" },
+          evangelical: { val: 3, note: "教派により幅がある。奇跡を認めるが、感情的過剰には慎重な層も多い" },
+          pentecostal: { val: 5, note: "異言・預言・癒しを現在も継続する聖霊の賜物として礼拝の中心に置く" },
+          solo:        { val: 1, note: "超自然体験より知的・文献的なアプローチを好む傾向" },
+        }
+      },
+      {
+        id: "eschatology",
+        label: "終末論的熱気",
+        sub: "再臨・黙示録・終末の時期への関心",
+        scores: {
+          catholic:    { val: 2, note: "典礼暦の中で終末を静かに体験する。時期特定や黙示録的興奮は一般的でない" },
+          orthodox:    { val: 2, note: "終末は典礼の中に溶け込んでいる。「常に終末の時」という意識で日常を生きる" },
+          anglican:    { val: 2, note: "終末論は重要な神学的テーマだが、時期計算や予言解読は奨励しない" },
+          lutheran:    { val: 2, note: "再臨への希望は信仰の核心だが、終末スケジュールへの熱気は控えめ" },
+          reformed:    { val: 3, note: "無千年期説（アミレニアリズム）が主流。歴史における神の支配を重視" },
+          evangelical: { val: 4, note: "携挙・患難期・千年王国など終末シナリオへの関心が高い。ハル・リンゼイ的伝統" },
+          pentecostal: { val: 5, note: "今が終末の時という確信が強い。聖霊の注ぎは再臨の前兆として解釈される" },
+          solo:        { val: 1, note: "終末論よりも現在の倫理・実践に関心が向く" },
+        }
+      },
+    ]
+  },
+  {
+    category: "神学・権威",
+    rows: [
+      {
+        id: "scripture",
+        label: "聖書の権威",
+        sub: "逐語霊感か、解釈的・歴史批評的か",
+        scores: {
+          catholic:    { val: 3, note: "聖書＋伝統（マジステリウム）の両方が権威。歴史批評的研究も認める" },
+          orthodox:    { val: 3, note: "聖書は教会の書。公会議的伝統の文脈の中で読む。逐語霊感ではない" },
+          anglican:    { val: 3, note: "聖書・伝統・理性の三本柱。歴史批評的研究と信仰的読みを並立させる" },
+          lutheran:    { val: 4, note: "聖書のみ（Sola Scriptura）だが、歴史批評的手法も受容する開かれた姿勢" },
+          reformed:    { val: 5, note: "聖書の完全霊感・無誤性を強調。ウェストミンスター信仰告白が基準" },
+          evangelical: { val: 4, note: "聖書の権威と無誤性を重視。ただし歴史批評への態度は保守〜中道で幅がある" },
+          pentecostal: { val: 4, note: "聖書の権威を強く認めつつ、聖霊の直接啓示も並置する。体験が解釈を補う" },
+          solo:        { val: 3, note: "聖書を重要な文献として読むが、特定の解釈規範に縛られない独学的姿勢" },
+        }
+      },
+      {
+        id: "predestination",
+        label: "予定説・神の主権",
+        sub: "カルヴァン的な神の選びの強調",
+        scores: {
+          catholic:    { val: 1, note: "予定説を否定。人間の自由意志と神の恵みの協働（シネルギズム）を教義とする" },
+          orthodox:    { val: 1, note: "予定説は否定。神は全員の救いを望む。人間の応答が重要" },
+          anglican:    { val: 2, note: "17世紀の神学的分裂の歴史あり。現代の聖公会は予定説に拘束されない包容的立場" },
+          lutheran:    { val: 2, note: "恵みの絶対性は強調するが、カルヴァン的二重予定説は採らない" },
+          reformed:    { val: 5, note: "神の絶対的主権と二重予定説（選びと遺棄）を明確に教義とする" },
+          evangelical: { val: 2, note: "アルミニウス主義（自由意志）が多数派。改革派的福音主義も少数いる" },
+          pentecostal: { val: 1, note: "予定説よりも聖霊の招きへの個人の応答を重視するアルミニウス主義的立場" },
+          solo:        { val: 1, note: "予定説は難しい概念として距離を置くか、保留する傾向" },
+        }
+      },
+      {
+        id: "intellect",
+        label: "知的・神学的伝統",
+        sub: "学問的・哲学的な信仰の深さ",
+        scores: {
+          catholic:    { val: 5, note: "トマス・アクィナス、スコラ哲学、上智大学神学部など2千年の知的伝統の厚み" },
+          orthodox:    { val: 4, note: "教父神学・ビザンティン哲学の豊かな伝統。現代神学者も多数（フロロフスキーなど）" },
+          anglican:    { val: 4, note: "C.S.ルイス、リチャード・フッカー、神学的包容性。知識人に親しまれてきた" },
+          lutheran:    { val: 4, note: "バッハ、ボンヘッファー、ブルトマン。ドイツ神学の伝統は世界最高水準" },
+          reformed:    { val: 5, note: "カルヴァン綱要、ウェストミンスター信仰問答。教理教育への徹底した取り組み" },
+          evangelical: { val: 3, note: "ティム・ケラー、C.S.ルイス受容。知的弁証論も発達するが実践重視の層も多い" },
+          pentecostal: { val: 1, note: "体験・直観・賜物を優先。神学的学問より聖霊の働きへの敏感さを重視する" },
+          solo:        { val: 4, note: "独学でカルト・バルト・ルイスなどを読む。組織神学より思想史的アプローチ" },
+        }
+      },
+    ]
+  },
+  {
+    category: "礼拝・共同体",
+    rows: [
+      {
+        id: "liturgy",
+        label: "典礼の荘厳さ",
+        sub: "礼拝の形式性・儀式的豊かさ",
+        scores: {
+          catholic:    { val: 5, note: "ミサ聖祭。典礼暦、聖体の秘跡、パイプオルガン。2千年の典礼的洗練" },
+          orthodox:    { val: 5, note: "ビザンティン典礼。イコン、聖歌、香、長大な礼拝。最も感覚的に豊かな典礼" },
+          anglican:    { val: 4, note: "祈禱書（BCP）に基づく品位ある典礼。カトリック的要素とプロテスタント的簡素さの融合" },
+          lutheran:    { val: 3, note: "典礼を保持しつつ説教を中心化。バッハの教会音楽が示す高い音楽的伝統" },
+          reformed:    { val: 1, note: "「神の言葉のみ」の原則から典礼要素を極力排除。シンプルな説教中心の礼拝" },
+          evangelical: { val: 2, note: "典礼より自発的・温かい雰囲気を重視。コンテンポラリー礼拝が主流" },
+          pentecostal: { val: 2, note: "形式より聖霊の自由な動きを優先。形式が霊を縛ると考える傾向がある" },
+          solo:        { val: 3, note: "典礼の美しさは評価するが参加義務は感じない。複数宗派を訪問して体験する" },
+        }
+      },
+      {
+        id: "community",
+        label: "共同体への帰属強度",
+        sub: "組織・共同体への関与の度合い",
+        scores: {
+          catholic:    { val: 5, note: "RCIA・堅信礼など段階的入信。教会帰属なしには秘跡も救いも成立しない" },
+          orthodox:    { val: 5, note: "教会は救いの方舟。共同体から離れた個人的信仰は正教的でないとされる" },
+          anglican:    { val: 3, note: "帰属を重視するが神学的多様性を包容。見学者に開かれた雰囲気がある" },
+          lutheran:    { val: 3, note: "共同体重視だが個人の良心を尊重する。週1礼拝＋小グループが標準的" },
+          reformed:    { val: 4, note: "長老制による教会規律を重視。会員制度・信仰問答が明確" },
+          evangelical: { val: 3, note: "共同体は重要だが個人の回心体験が中心。小グループ参加が入門の王道" },
+          pentecostal: { val: 4, note: "熱い共同体。ホームセル・祈祷会への密な関与を求める文化" },
+          solo:        { val: 1, note: "組織への帰属を急がない。「巡礼者」として複数の教会を訪問しながら探索する" },
+        }
+      },
+      {
+        id: "social",
+        label: "社会参与・正義",
+        sub: "教会の社会的使命の強調度",
+        scores: {
+          catholic:    { val: 4, note: "カリタス・社会教説・解放神学の伝統。「神の優先的選択肢は貧者にある」" },
+          orthodox:    { val: 2, note: "社会参与より典礼・内的変容を優先する傾向。ただし慈善活動は行う" },
+          anglican:    { val: 4, note: "病院・学校・社会福祉を教会の使命として明確に位置づけ。公共神学の伝統" },
+          lutheran:    { val: 4, note: "ディアコニア（奉仕）が伝統。釜ヶ崎・難民支援など社会的弱者への関与" },
+          reformed:    { val: 3, note: "カルヴァンの社会変革思想の伝統。公共神学として政策提言も行う" },
+          evangelical: { val: 3, note: "個人救済優先だが、社会参与を重視する「社会的福音派」の流れもある" },
+          pentecostal: { val: 2, note: "宣教・霊的戦いを優先。社会参与より個人の回心と霊的成長を重視する傾向" },
+          solo:        { val: 3, note: "社会的倫理への関心は高いが、組織的な社会参与より個人的実践に留まる" },
+        }
+      },
+    ]
+  },
+  {
+    category: "倫理・社会問題",
+    rows: [
+      {
+        id: "women",
+        label: "女性聖職者",
+        sub: "女性の司祭・牧師叙階を認めるか",
+        scores: {
+          catholic:    { val: 1, note: "教義として不可能。ヨハネ・パウロ2世が決定的に封印。変更の可能性なし" },
+          orthodox:    { val: 1, note: "同様に神学的に不可能。司祭職はキリストの男性性を体現するとされる" },
+          anglican:    { val: 5, note: "女性司祭・主教を認める。日本聖公会でも実現済み" },
+          lutheran:    { val: 5, note: "女性牧師を認める。日本福音ルーテル教会でも複数の女性牧師が活躍" },
+          reformed:    { val: 2, note: "主流派は聖書的秩序として男性長老制を維持。一部進歩的な教会は女性を認める" },
+          evangelical: { val: 2, note: "保守派が多数。「平等主義」vs「相補主義」の議論が継続中" },
+          pentecostal: { val: 3, note: "「賜物・召命があれば性別は問わない」という論理で女性説教者が比較的多い" },
+          solo:        { val: 4, note: "女性聖職者に肯定的な傾向。ガラテヤ3:28的な平等主義に親和性が高い" },
+        }
+      },
+      {
+        id: "lgbtq",
+        label: "同性愛への立場",
+        sub: "同性婚・同性愛への教義的対応",
+        scores: {
+          catholic:    { val: 1, note: "自然法・聖書に基づき婚姻は男女間のみ。同性愛的傾向と行為を区別する" },
+          orthodox:    { val: 1, note: "同様に婚姻は男女間のみ。公式には変更の余地なし" },
+          anglican:    { val: 4, note: "日本聖公会はリベラル寄り。世界的にはカンタベリー内でも分裂が起きている" },
+          lutheran:    { val: 3, note: "日本福音ルーテル教会は包摂的な議論が続く。欧州ルーテルは同性婚を認める国も" },
+          reformed:    { val: 1, note: "聖書に基づき同性愛を罪として位置づける立場が主流" },
+          evangelical: { val: 1, note: "保守的立場が多数。ただし「愛は認めつつ行為を認めない」という議論もある" },
+          pentecostal: { val: 1, note: "保守的。聖霊体験重視だが倫理的立場は保守的な聖書観に基づく" },
+          solo:        { val: 4, note: "個人の良心の領域と捉える傾向が高い。教会の裁きへの懐疑を持つ" },
+        }
+      },
+    ]
+  },
+];
+
+// ===== CATEGORIES FOR FILTER =====
+const allCategories = [...new Set(themes.map(t => t.category))];
+let activeCategory = 'all';
+
+function renderFilter() {
+  const bar = document.getElementById('filter-bar');
+  const allBtn = document.createElement('button');
+  allBtn.className = 'filter-btn' + (activeCategory === 'all' ? ' active' : '');
+  allBtn.textContent = 'すべて';
+  allBtn.onclick = () => { activeCategory = 'all'; renderAll(); };
+  bar.appendChild(allBtn);
+
+  allCategories.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (activeCategory === cat ? ' active' : '');
+    btn.textContent = cat;
+    btn.onclick = () => { activeCategory = cat; renderAll(); };
+    bar.appendChild(btn);
+  });
+}
+
+function renderStars(val, color) {
+  let html = '<div class="stars">';
+  for (let i = 1; i <= 5; i++) {
+    if (i <= val) {
+      html += `<div class="star filled" style="background:${color}"></div>`;
+    } else {
+      html += `<div class="star empty"></div>`;
+    }
+  }
+  html += '</div>';
+  return html;
+}
+
+function renderMatrix() {
+  const body = document.getElementById('matrix-body');
+  body.innerHTML = '';
+
+  const filtered = activeCategory === 'all'
+    ? themes
+    : themes.filter(t => t.category === activeCategory);
+
+  filtered.forEach(group => {
+    const groupEl = document.createElement('div');
+    groupEl.className = 'theme-group';
+
+    const titleEl = document.createElement('div');
+    titleEl.className = 'theme-group-title';
+    titleEl.textContent = group.category;
+    groupEl.appendChild(titleEl);
+
+    group.rows.forEach((row, ri) => {
+      const rowEl = document.createElement('div');
+      rowEl.className = 'matrix-row';
+      rowEl.style.animationDelay = `${ri * 0.04}s`;
+
+      // Label cell
+      const labelEl = document.createElement('div');
+      labelEl.className = 'row-label';
+      labelEl.innerHTML = `
+        <span class="row-label-main">${row.label}</span>
+        <span class="row-label-sub">${row.sub}</span>
+      `;
+      rowEl.appendChild(labelEl);
+
+      // Score cells
+      denomKeys.forEach(key => {
+        const score = row.scores[key];
+        const color = `var(--c-${key})`;
+        const cellEl = document.createElement('div');
+        cellEl.className = 'matrix-cell';
+
+        const valLabel = ['', '低', '低め', '中', '高め', '高'][score.val];
+
+        cellEl.innerHTML = `
+          ${renderStars(score.val, color)}
+          <div class="cell-tooltip">
+            <div class="cell-tooltip-title">${score.val}／5 — ${valLabel}</div>
+            <div class="cell-tooltip-body">${score.note}</div>
+          </div>
+        `;
+        rowEl.appendChild(cellEl);
+      });
+
+      groupEl.appendChild(rowEl);
+    });
+
+    body.appendChild(groupEl);
+  });
+}
+
+function renderAll() {
+  // Update filter buttons
+  document.querySelectorAll('.filter-btn').forEach((btn, i) => {
+    if (i === 0) btn.className = 'filter-btn' + (activeCategory === 'all' ? ' active' : '');
+    else btn.className = 'filter-btn' + (activeCategory === allCategories[i-1] ? ' active' : '');
+  });
+  renderMatrix();
+}
+
+renderFilter();
+renderMatrix();
+</script>
+</body>
+</html>
