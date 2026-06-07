@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>キリスト教 入門ナビ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+JP:wght@300;400;600&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #b8956a;
+    --gold-light: #d4b483;
+    --gold-pale: #f5ede0;
+    --ink: #1a1410;
+    --ink-mid: #3d2f20;
+    --ink-soft: #6b5742;
+    --parchment: #faf6f0;
+    --parchment-dark: #f0e8da;
+    --white: #ffffff;
+    --accent-blue: #2c4a6e;
+    --accent-green: #2d5a3d;
+    --accent-red: #7a2020;
+    --accent-purple: #4a2d6e;
+    --accent-teal: #1d4a4a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Serif JP', 'Cormorant Garamond', Georgia, serif;
+    background: var(--ink);
+    color: var(--parchment);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ===== BACKGROUND ===== */
+  .bg-layer {
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% -10%, #2c1f0e 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 100% 100%, #0d1a2a 0%, transparent 60%),
+      linear-gradient(160deg, #0f0b07 0%, #1a1008 40%, #0a1018 100%);
+    z-index: 0;
+  }
+
+  .cross-bg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    opacity: 0.03;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .cross-bg::before {
+    content: '✝';
+    font-size: 500px;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--gold);
+  }
+
+  /* ===== CONTAINER ===== */
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    min-height: 100vh;
+  }
+
+  /* ===== HEADER ===== */
+  .site-header {
+    text-align: center;
+    padding: 48px 0 40px;
+    border-bottom: 1px solid rgba(184, 149, 106, 0.2);
+    margin-bottom: 48px;
+    animation: fadeDown 0.8s ease both;
+  }
+
+  .site-header .eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    opacity: 0.8;
+  }
+
+  .site-header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 6vw, 52px);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    line-height: 1.2;
+    color: var(--parchment);
+    margin-bottom: 8px;
+  }
+
+  .site-header h1 span {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  .site-header .subtitle {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--ink-soft);
+    color: rgba(240, 232, 218, 0.55);
+    margin-top: 12px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ===== PROGRESS ===== */
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 36px;
+    animation: fadeIn 0.5s ease both;
+  }
+
+  .progress-bar-track {
+    flex: 1;
+    height: 2px;
+    background: rgba(184, 149, 106, 0.15);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+    border-radius: 2px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .progress-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    opacity: 0.8;
+    min-width: 60px;
+    text-align: right;
+  }
+
+  /* ===== QUESTION CARD ===== */
+  .card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(184, 149, 106, 0.18);
+    border-radius: 2px;
+    padding: 40px 40px 36px;
+    position: relative;
+    animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+
+  @media (max-width: 560px) {
+    .card { padding: 28px 20px 24px; }
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 40px; right: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.4;
+  }
+
+  .q-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 20px;
+  }
+
+  .q-text {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(17px, 3vw, 22px);
+    font-weight: 400;
+    line-height: 1.7;
+    color: var(--parchment);
+    margin-bottom: 8px;
+  }
+
+  .q-sub {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    color: rgba(240, 232, 218, 0.45);
+    line-height: 1.6;
+    margin-bottom: 32px;
+    letter-spacing: 0.03em;
+  }
+
+  /* ===== OPTIONS ===== */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .option-btn {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(184, 149, 106, 0.2);
+    border-radius: 2px;
+    padding: 16px 20px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .option-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(184,149,106,0.08) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .option-btn:hover {
+    border-color: rgba(184, 149, 106, 0.5);
+    background: rgba(184, 149, 106, 0.06);
+    transform: translateX(4px);
+  }
+
+  .option-btn:hover::after { opacity: 1; }
+
+  .option-btn:active { transform: translateX(2px) scale(0.99); }
+
+  .option-letter {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    opacity: 0.7;
+    min-width: 18px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .option-text {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(240, 232, 218, 0.85);
+    line-height: 1.6;
+    letter-spacing: 0.03em;
+  }
+
+  /* ===== INTRO / RESULT SCREENS ===== */
+  .screen { animation: slideUp 0.6s cubic-bezier(0.4,0,0.2,1) both; }
+
+  .intro-icon {
+    font-size: 48px;
+    text-align: center;
+    margin-bottom: 24px;
+    opacity: 0.7;
+  }
+
+  .intro-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 300;
+    text-align: center;
+    color: var(--parchment);
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+
+  .intro-title em { color: var(--gold); font-style: italic; }
+
+  .intro-body {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.9;
+    color: rgba(240, 232, 218, 0.65);
+    text-align: center;
+    margin-bottom: 36px;
+    letter-spacing: 0.03em;
+  }
+
+  .btn-primary {
+    display: block;
+    width: 100%;
+    padding: 18px 32px;
+    background: linear-gradient(135deg, var(--gold) 0%, #9a7a50 100%);
+    border: none;
+    border-radius: 2px;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--ink);
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(184,149,106,0.3); }
+  .btn-primary:hover::before { opacity: 1; }
+
+  .btn-secondary {
+    display: block;
+    width: 100%;
+    padding: 14px 32px;
+    background: transparent;
+    border: 1px solid rgba(184, 149, 106, 0.3);
+    border-radius: 2px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(240, 232, 218, 0.6);
+    cursor: pointer;
+    letter-spacing: 0.06em;
+    transition: all 0.3s ease;
+    margin-top: 12px;
+    text-align: center;
+  }
+  .btn-secondary:hover {
+    border-color: rgba(184, 149, 106, 0.6);
+    color: var(--parchment);
+  }
+
+  /* ===== RESULT ===== */
+  .result-badge {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .result-icon {
+    font-size: 56px;
+    display: block;
+    margin-bottom: 12px;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s both;
+  }
+
+  .result-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+    margin-bottom: 10px;
+  }
+
+  .result-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 6vw, 42px);
+    font-weight: 400;
+    color: var(--parchment);
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+  }
+
+  .result-tagline {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--gold-light);
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  .result-divider {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 28px auto;
+    opacity: 0.5;
+  }
+
+  .result-section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.6;
+    margin-bottom: 12px;
+  }
+
+  .result-desc {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.9;
+    color: rgba(240, 232, 218, 0.75);
+    margin-bottom: 28px;
+    letter-spacing: 0.03em;
+  }
+
+  .result-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+
+  .tag {
+    padding: 5px 14px;
+    border: 1px solid rgba(184, 149, 106, 0.3);
+    border-radius: 20px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--gold-light);
+    letter-spacing: 0.05em;
+    opacity: 0.85;
+  }
+
+  .next-steps {
+    background: rgba(184, 149, 106, 0.06);
+    border: 1px solid rgba(184, 149, 106, 0.15);
+    border-radius: 2px;
+    padding: 24px;
+    margin-bottom: 28px;
+  }
+
+  .next-steps ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .next-steps li {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(240, 232, 218, 0.7);
+    line-height: 1.6;
+    padding-left: 20px;
+    position: relative;
+    letter-spacing: 0.03em;
+  }
+
+  .next-steps li::before {
+    content: '✝';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 10px;
+    top: 3px;
+    opacity: 0.6;
+  }
+
+  .score-bars {
+    margin-bottom: 28px;
+  }
+
+  .score-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .score-bar-label {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 11px;
+    font-weight: 300;
+    color: rgba(240, 232, 218, 0.55);
+    min-width: 100px;
+    letter-spacing: 0.03em;
+  }
+
+  .score-bar-track {
+    flex: 1;
+    height: 3px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .score-bar-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    color: var(--gold);
+    min-width: 30px;
+    text-align: right;
+    opacity: 0.8;
+  }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="bg-layer"></div>
+<div class="cross-bg"></div>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <p class="eyebrow">Christianity Navigator</p>
+    <h1>キリスト教<br><span>入門ナビ</span></h1>
+    <p class="subtitle">15の問いで、あなたの信仰スタイルを探る</p>
+  </header>
+
+  <!-- INTRO SCREEN -->
+  <div id="screen-intro" class="card screen">
+    <div class="intro-icon">✝</div>
+    <p class="intro-title">キリスト教は<br><em>ひとつではない</em></p>
+    <p class="intro-body">
+      カトリック、プロテスタント、東方正教会——<br>
+      それぞれに異なる礼拝の形、神学の強調点、共同体の文化がある。<br><br>
+      10の問いに答えることで、あなたの気質・関心・学び方に<br>
+      最も共鳴する宗派と入門スタイルを提示します。<br><br>
+      正解も不正解もありません。<br>
+      直感で選んでください。
+    </p>
+    <button class="btn-primary" onclick="startQuiz()">診断をはじめる</button>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div id="screen-quiz" class="hidden">
+    <div class="progress-wrap">
+      <div class="progress-bar-track">
+        <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+      <span class="progress-label" id="progress-label">0 / 10</span>
+    </div>
+    <div class="card" id="question-card">
+      <p class="q-number" id="q-number">Question 1</p>
+      <p class="q-text" id="q-text"></p>
+      <p class="q-sub" id="q-sub"></p>
+      <div class="options" id="options"></div>
+    </div>
+  </div>
+
+  <!-- RESULT SCREEN -->
+  <div id="screen-result" class="hidden card screen">
+    <div class="result-badge">
+      <span class="result-icon" id="result-icon"></span>
+      <p class="result-label">あなたに最も合う宗派・スタイル</p>
+      <p class="result-name" id="result-name"></p>
+      <p class="result-tagline" id="result-tagline"></p>
+    </div>
+    <div class="result-divider"></div>
+    <p class="result-section-title">この宗派について</p>
+    <p class="result-desc" id="result-desc"></p>
+    <div class="result-tags" id="result-tags"></div>
+    <p class="result-section-title">傾向スコア</p>
+    <div class="score-bars" id="score-bars"></div>
+    <p class="result-section-title">あなたへの入門ステップ</p>
+    <div class="next-steps">
+      <ul id="next-steps"></ul>
+    </div>
+    <button class="btn-primary" onclick="restartQuiz()">もう一度診断する</button>
+    <button class="btn-secondary" onclick="showAllDenominations()">全宗派の概要を見る</button>
+  </div>
+
+  <!-- ALL DENOMINATIONS -->
+  <div id="screen-all" class="hidden">
+    <div id="all-denom-content"></div>
+    <button class="btn-secondary" onclick="backToResult()" style="margin-top:20px">← 結果に戻る</button>
+  </div>
+
+</div>
+
+<script>
+// ===== QUESTIONS =====
+const questions = [
+  {
+    text: "礼拝の場に求めるものは何ですか？",
+    sub: "初めて教会の扉を開けたとき、どんな空間であってほしいか想像してください。",
+    options: [
+      { text: "神聖な荘厳さ。ステンドグラス、香、厳かな儀式の中に身を置きたい", scores: { catholic: 3, orthodox: 3, anglican: 1 } },
+      { text: "シンプルで温かい。長い説教より、歌と分かち合いがある場", scores: { evangelical: 3, pentecostal: 2 } },
+      { text: "品位ある伝統。古典的な典礼と穏やかな共同体", scores: { anglican: 3, lutheran: 2, reformed: 1 } },
+      { text: "静けさと内省。できれば個人で聖書を読み、神と向き合いたい", scores: { solo: 3, reformed: 1 } },
+    ]
+  },
+  {
+    text: "「権威」の根拠として、どれが最も納得できますか？",
+    sub: "何を信仰の判断基準にするか、という問いです。",
+    options: [
+      { text: "聖書＋使徒から連なる教会の伝統（マジステリウム）の両方", scores: { catholic: 3, orthodox: 2 } },
+      { text: "聖書のみ（Sola Scriptura）—— 個人が直接聖書を読んで判断する", scores: { evangelical: 3, reformed: 3, lutheran: 2, solo: 2 } },
+      { text: "聖書と長い歴史的伝統のバランス。どちらも無視できない", scores: { anglican: 3, lutheran: 2 } },
+      { text: "聖書＋聖霊の直接的な導き・体験", scores: { pentecostal: 3, evangelical: 1 } },
+    ]
+  },
+  {
+    text: "「救い」についての理解として、しっくりくるのは？",
+    sub: "神学的な核心部分。直感で選んで構いません。",
+    options: [
+      { text: "信仰と善行の両方が必要。秘跡（洗礼・聖餐など）を通じて与えられる", scores: { catholic: 3, orthodox: 2, anglican: 1 } },
+      { text: "信仰のみ（Sola Fide）。神の恵みを受け取る行為が救いの核心", scores: { lutheran: 3, reformed: 2, evangelical: 2 } },
+      { text: "個人の回心体験（Born Again）が決定的な転換点", scores: { evangelical: 3, pentecostal: 2 } },
+      { text: "まだよく分からない。まずは神の存在から考えたい", scores: { solo: 2, reformed: 1, lutheran: 1 } },
+    ]
+  },
+  {
+    text: "知的・学問的な信仰に対してどう思いますか？",
+    sub: "哲学、神学、歴史批評——信仰は知性と対話できるか。",
+    options: [
+      { text: "重要。信仰は理性的に問い続けることで深まる（知性的信仰）", scores: { catholic: 2, reformed: 3, lutheran: 2, solo: 2 } },
+      { text: "大切だが、神学論争より実践と体験のほうが先にある", scores: { evangelical: 2, pentecostal: 3 } },
+      { text: "豊かな神学的伝統を学ぶことで信仰が安定すると感じる", scores: { reformed: 2, anglican: 2, orthodox: 2 } },
+      { text: "まず自分で文献を読んで考えたい。組織的な学びより独学派", scores: { solo: 3, reformed: 1 } },
+    ]
+  },
+  {
+    text: "共同体（コミュニティ）への関与について",
+    sub: "信仰生活に他者がどれほど必要か。",
+    options: [
+      { text: "深く関与したい。洗礼準備、成人式（堅信礼）など段階的に受け入れられる共同体に入りたい", scores: { catholic: 3, orthodox: 3, anglican: 1 } },
+      { text: "中程度。週1礼拝と小グループ程度なら参加できる", scores: { evangelical: 2, lutheran: 2, anglican: 2 } },
+      { text: "熱い共同体。一緒に祈り、歌い、御霊の働きを体験する場", scores: { pentecostal: 3 } },
+      { text: "最小限。信仰は個人のものであり、組織への帰属は重くしたくない", scores: { solo: 3, reformed: 1 } },
+    ]
+  },
+  {
+    text: "「神の選び・予定説」についての感覚は？",
+    sub: "神が人を予め救いに定めているという概念について。",
+    options: [
+      { text: "すっきりする。神の主権が絶対であることは信仰の基盤になる", scores: { reformed: 3 } },
+      { text: "難しい概念だが、神の恵みの絶対性という意味では共感する", scores: { lutheran: 2, reformed: 1 } },
+      { text: "違和感がある。人の自由意志と神の招きの協働を信じたい", scores: { catholic: 2, orthodox: 2, evangelical: 1, pentecostal: 1 } },
+      { text: "よく分からないので保留", scores: { solo: 1, anglican: 1 } },
+    ]
+  },
+  {
+    text: "礼拝における音楽と表現の好みは？",
+    sub: "信仰をどのように「体で表現したいか」。",
+    options: [
+      { text: "グレゴリオ聖歌、パイプオルガン、伝統的な賛美歌。荘厳で美しい音楽", scores: { catholic: 2, orthodox: 3, anglican: 2, lutheran: 2 } },
+      { text: "コンテンポラリー賛美。ギター・ドラムでエネルギーある礼拝", scores: { evangelical: 3, pentecostal: 2 } },
+      { text: "手を挙げ、踊り、方言（異言）で祈ることも含む自由な礼拝", scores: { pentecostal: 3 } },
+      { text: "音楽より、静かな黙想・聖書朗読のほうが心に響く", scores: { solo: 3, reformed: 2, lutheran: 1 } },
+    ]
+  },
+  {
+    text: "社会問題（貧困・環境・移民など）と信仰の関係は？",
+    sub: "キリスト教がどのように社会と向き合うべきか。",
+    options: [
+      { text: "社会正義は信仰の核心。教会は世界を変える使命がある（解放神学的）", scores: { catholic: 2, evangelical: 1, reformed: 1 } },
+      { text: "個人の救済が先。社会参与は大切だが神学の中心ではない", scores: { evangelical: 2, lutheran: 1, reformed: 1 } },
+      { text: "伝統と秩序を重んじつつ、慈善・奉仕活動で社会に関わる", scores: { anglican: 2, lutheran: 2, catholic: 1 } },
+      { text: "社会より霊的な戦いと宣教が優先", scores: { pentecostal: 3, evangelical: 1 } },
+    ]
+  },
+  {
+    text: "「奇跡・癒し・預言」などの超自然的体験に対して",
+    sub: "聖霊の働きをどう捉えるか。",
+    options: [
+      { text: "現代でも起こりうる。体験的に信仰が確認される", scores: { pentecostal: 3, evangelical: 1 } },
+      { text: "否定はしないが、感情的・主観的になりすぎるリスクがある", scores: { reformed: 2, lutheran: 2, anglican: 1 } },
+      { text: "秘跡（洗礼・聖体）を通じて聖霊は確かに働く。体験的熱狂には慎重", scores: { catholic: 2, orthodox: 3, lutheran: 1 } },
+      { text: "よく分からない。まず神の存在を自分で確認したい段階", scores: { solo: 3 } },
+    ]
+  },
+  {
+    text: "キリスト教を学ぶとしたら、どのスタイルが合いますか？",
+    sub: "入門の実際的なアプローチについて。",
+    options: [
+      { text: "RCIA（カトリック入門講座）など、段階的な学びと儀式のプロセスを経て入信したい", scores: { catholic: 3, orthodox: 2 } },
+      { text: "英語・日本語問わず古典神学書を独学で読み、自分のペースで信仰を構築したい", scores: { reformed: 3, solo: 2, lutheran: 1 } },
+      { text: "アルファコースや聖書勉強会に参加し、対話しながら学びたい", scores: { evangelical: 3, anglican: 2 } },
+      { text: "礼拝や祈り会に足を運び、体験から信仰を理解していきたい", scores: { pentecostal: 3, orthodox: 1, evangelical: 1 } },
+    ]
+  },
+  {
+    text: "「悪」はどのような存在だと思いますか？",
+    sub: "日常会話に「サタン」「悪魔」が出てきたとき、どう反応しますか？",
+    options: [
+      { text: "悪は善の欠如（privatio boni）。人格的な悪の実体より、神の不在として理解したい", scores: { catholic: 3, orthodox: 2, reformed: 2, solo: 1 } },
+      { text: "悪は実在する力だが、神の主権の下に置かれている。慎重に語るべき概念", scores: { lutheran: 3, reformed: 2, anglican: 2 } },
+      { text: "サタンは人格的に実在し、日常の霊的戦いの相手として意識する必要がある", scores: { pentecostal: 3, evangelical: 2 } },
+      { text: "「悪魔」の言語は神話的・象徴的なものとして読む。文字通りには受け取らない", scores: { solo: 3, anglican: 1 } },
+    ]
+  },
+  {
+    text: "「終末・再臨」についての感覚は？",
+    sub: "歴史の終わりと、キリストの再来という概念をどう受け止めますか？",
+    options: [
+      { text: "終末の時期や順序を聖書から読み解くことに強い関心がある（黙示録・ダニエル書など）", scores: { evangelical: 3, pentecostal: 2 } },
+      { text: "再臨は信じるが、時期の特定や予言の解読より、今をどう生きるかが先", scores: { lutheran: 2, reformed: 2, catholic: 1, anglican: 1 } },
+      { text: "終末論は教会の典礼暦（待降節・復活節）の中で静かに体験するもの", scores: { catholic: 3, orthodox: 3, anglican: 2 } },
+      { text: "まだその段階ではない。神の存在を確認してから考える問い", scores: { solo: 3 } },
+    ]
+  },
+  {
+    text: "歴史や政治の出来事に「神の計画（摂理）」を読み取りますか？",
+    sub: "ある政治指導者の登場、戦争、パンデミック——こうした出来事を信仰でどう解釈しますか？",
+    options: [
+      { text: "神は歴史の主。特定の出来事に摂理を読み取ることは信仰的に意味がある", scores: { reformed: 3, evangelical: 2, pentecostal: 1 } },
+      { text: "神は歴史に働くが、人間が「これが神の意志」と断言することには慎重でありたい", scores: { lutheran: 3, catholic: 2, orthodox: 2, anglican: 2 } },
+      { text: "政治と信仰は切り分けて考えたい。宗教的解釈を政治に持ち込むことに違和感がある", scores: { solo: 3, reformed: 1, anglican: 1 } },
+      { text: "聖霊が今の時代に強く動いているサインを感じ取ることが大切", scores: { pentecostal: 3, evangelical: 1 } },
+    ]
+  },
+  {
+    text: "同性愛・同性婚について、信仰の観点からどう考えますか？",
+    sub: "正解を求める問いではありません。どの「論理」に最も共鳴するかを選んでください。",
+    options: [
+      { text: "聖書と自然法に基づき、婚姻は男女間のものと定義される。これは変えられない教義", scores: { catholic: 3, orthodox: 3, evangelical: 2, pentecostal: 2 } },
+      { text: "聖書の記述は重要だが、文化的文脈の読み直しが必要。愛と包摂を優先したい", scores: { anglican: 3, lutheran: 2, solo: 1 } },
+      { text: "信仰と性の問題は個人の良心の領域。教会が一律に裁くべきではない", scores: { solo: 3, anglican: 1, reformed: 1 } },
+      { text: "まだ自分の中で答えが出ていない。様々な神学的立場を学んでいる段階", scores: { solo: 2, lutheran: 1, reformed: 1 } },
+    ]
+  },
+  {
+    text: "女性が司祭・牧師として説教し、聖餐を執行することについて",
+    sub: "聖職者の性別は、神学的に意味を持つと思いますか？",
+    options: [
+      { text: "司祭職はキリストの男性性を体現するもの。女性の叙階は神学的に不可能", scores: { catholic: 3, orthodox: 3 } },
+      { text: "聖書の文脈では男性リーダーシップが示されており、今も守るべき秩序だと思う", scores: { evangelical: 3, reformed: 2, pentecostal: 1 } },
+      { text: "ガラテヤ3:28（男も女もない）の原則から、女性聖職者は当然の帰結", scores: { anglican: 3, lutheran: 3 } },
+      { text: "性別より賜物・召命が基準。神が召したなら性別は問わない", scores: { pentecostal: 2, evangelical: 1, solo: 2 } },
+    ]
+  }
+];
+
+// ===== DENOMINATIONS =====
+const denominations = {
+  catholic: {
+    name: "カトリック教会",
+    tagline: "—— 2千年の歴史と普遍的な共同体",
+    icon: "⛪",
+    color: "#4a6e8a",
+    desc: "使徒継承に基づく権威と、秘跡（洗礼・聖体・告解など）を通じた恵みの付与を重視。教皇を頂点とする明確な教義体系を持つ。典礼は荘厳で美しく、知的な神学的伝統（トマス・アクィナスなど）も豊か。日本では上智大学や多くの病院・学校が母体。",
+    tags: ["典礼の荘厳さ", "明確な教義", "使徒継承", "社会的使命", "哲学的神学"],
+    steps: [
+      "RCIA（成人入門講座）を開催している近隣のカトリック教会に問い合わせる",
+      "まず「ミサ」（日曜礼拝）に見学として参加する（参加は自由）",
+      "読書：カルカン『カトリック要理』または『カトリック教会のカテキズム』",
+      "上智大学神学部や聖イグナチオ教会（東京）の公開講座を活用する",
+    ]
+  },
+  orthodox: {
+    name: "東方正教会",
+    tagline: "—— 原初の伝統と神秘的な礼拝",
+    icon: "☦",
+    color: "#6e4a2d",
+    desc: "1054年の東西分裂以前の「公会議的」な信仰を継承。ビザンティン聖歌、イコン、長大な礼拝は独特の神秘的な雰囲気を持つ。神学は「テオーシス（神化）」——人間が神の性質に与るプロセス——を中心に据える。日本ではニコライ堂（東京）が拠点。",
+    tags: ["神秘的体験", "イコン・聖歌", "テオーシス", "公会議的権威", "豊かな典礼暦"],
+    steps: [
+      "ニコライ堂（東京・神田）の主日奉神礼（礼拝）を見学する",
+      "正教会の入門書「正教会について」（日本正教会刊）を入手する",
+      "洗礼準備は通常数ヶ月〜1年の教理問答（カテキズム）を経る",
+      "正教の霊性：『正教会の信仰と礼拝』（セラフィム・ローズ著）を読む",
+    ]
+  },
+  anglican: {
+    name: "聖公会（アングリカン）",
+    tagline: "—— 包容力と伝統の知的バランス",
+    icon: "✟",
+    color: "#2d5a3d",
+    desc: "「聖書・伝統・理性」の三本柱を重んじる。典礼はカトリック的荘厳さとプロテスタントの信仰義認を融合し、神学的多様性（保守〜リベラル）を内包する。英国国教会を母体に、日本聖公会として展開。知識人・思索者に親しみやすい雰囲気。",
+    tags: ["神学的包容性", "典礼の品位", "理性的信仰", "伝統と改革", "社会参与"],
+    steps: [
+      "日本聖公会の近隣の教会に問い合わせ、主日聖餐式を見学する",
+      "読書：C.S.ルイス『キリスト教の精髄（Mere Christianity）』",
+      "アルファコース（聖公会系でも開催）への参加",
+      "受洗準備クラスへの参加（通常3〜6ヶ月）",
+    ]
+  },
+  lutheran: {
+    name: "ルーテル派",
+    tagline: "—— 恵みのみ、信仰のみ、聖書のみ",
+    icon: "✠",
+    color: "#5a3d2d",
+    desc: "マルティン・ルターの宗教改革から生まれた宗派。「信仰義認」——行いではなく信仰によって義と認められる——を核心に据える。典礼は保持しつつも聖書の権威を最優先。バッハの音楽、ハイデルベルク問答など知的・文化的伝統も豊富。日本福音ルーテル教会が母体。",
+    tags: ["信仰義認", "恵みの神学", "聖書の権威", "典礼保持", "知的誠実さ"],
+    steps: [
+      "日本福音ルーテル教会（JELC）の近隣教会を探して礼拝に参加する",
+      "読書：ルター『キリスト者の自由』（岩波文庫）",
+      "ルーテル学院大学（東京）の公開講座を確認する",
+      "洗礼準備クラス（通常数ヶ月）に参加する",
+    ]
+  },
+  reformed: {
+    name: "改革派・長老教会",
+    tagline: "—— 神の主権と知性的な信仰",
+    icon: "✝",
+    color: "#2d3d5a",
+    desc: "カルヴァンの神学を継承し、「神の絶対的主権」と「予定説」を強調する。説教中心の礼拝、信仰問答（ハイデルベルク、ウェストミンスター）による教理教育、長老制による教会統治が特徴。知的・組織的なアプローチで信仰を構築したい人に向く。",
+    tags: ["神の主権", "予定説", "教義的厳格さ", "説教中心", "知性的信仰"],
+    steps: [
+      "日本基督改革派教会または日本長老教会の礼拝を訪問する",
+      "読書：カルヴァン『キリスト教綱要』（入門版あり）またはウェストミンスター小教理問答",
+      "改革派の入門書：R.C.スプロール『誰のために（Not a Chance）』などを読む",
+      "オンライン：Ligonier Ministries（日本語コンテンツあり）を活用する",
+    ]
+  },
+  evangelical: {
+    name: "福音派（エバンジェリカル）",
+    tagline: "—— 個人の回心と聖書中心の信仰",
+    icon: "✙",
+    color: "#5a4a2d",
+    desc: "「福音（ゴスペル）」による個人の回心・重生（Born Again）を核心に置く。聖書の権威を重視しつつも、教派を超えた信仰の実践性を重んじる。礼拝スタイルは多様で、コンテンポラリー礼拝から伝統的なスタイルまで幅広い。日本では日本同盟基督教団など。",
+    tags: ["個人の回心", "聖書中心", "実践的信仰", "宣教の使命", "教派横断的"],
+    steps: [
+      "アルファコース（Alpha Course）を開催している教会を探して参加する",
+      "読書：スタントン・ジョーンズ『キリスト教とは何か』またはティム・ケラー『神を求める理由』",
+      "地域の福音派教会（バプテスト、同盟基督など）の礼拝に参加する",
+      "YouVersion Bible App（日本語聖書付き）で聖書通読を始める",
+    ]
+  },
+  pentecostal: {
+    name: "ペンテコステ・カリスマ派",
+    tagline: "—— 聖霊の体験と生きた礼拝",
+    icon: "🔥",
+    color: "#6e2d2d",
+    desc: "聖霊の働き——異言、癒し、預言——を現代でも継続する恵みとして重視する。礼拝は感情的・体験的で、音楽・祈りへの積極的な参加が求められる。理論より体験から入る求道者に向く。日本ではYokohamaのInternational Christian Assembly（ICA）やフィラデルフィア教会など。",
+    tags: ["聖霊の体験", "活発な礼拝", "癒しと預言", "感情的参与", "宣教的熱気"],
+    steps: [
+      "ペンテコステ系・カリスマ系教会の礼拝（日曜）に参加して体験する",
+      "読書：ゴードン・フィー『聖霊と神の民』または書かれた神の言葉の学び",
+      "ホームセル（家庭集会）に招待してもらえるか教会に問い合わせる",
+      "Hillsong、Bethel Musicなどのワーシップミュージックで聖霊礼拝に親しむ",
+    ]
+  },
+  solo: {
+    name: "独学・個人帰依スタイル",
+    tagline: "—— 組織より先に、まず神と向き合う",
+    icon: "📖",
+    color: "#3d3d3d",
+    desc: "特定の宗派に入る前に、まず自分で聖書を読み、神学を学び、信仰の輪郭を自分で確かめたい——そういう気質を持つ人がいる。これは弱さではなく、知性的誠実さの表れだ。良質な書籍・オンライン資源を使いながら、必要に応じて複数の教会を訪問する「巡礼的」アプローチが向く。",
+    tags: ["独学・知的探究", "複数宗派の比較", "組織帰属を急がない", "自律的信仰形成", "文献中心"],
+    steps: [
+      "まず聖書を通読する（新約聖書から。新改訳2017または新共同訳）",
+      "読書：C.S.ルイス『驚かされた喜び』、アリスター・マクグラス『キリスト教神学入門』",
+      "複数の宗派の礼拝を「見学者」として訪問し比較する（カトリック・プロテスタント・正教会）",
+      "ティム・ケラー『懐疑する人のための神』——信仰の知的障壁を丁寧に論じた良著",
+    ]
+  }
+};
+
+// ===== STATE =====
+let currentQ = 0;
+let scores = { catholic:0, orthodox:0, anglican:0, lutheran:0, reformed:0, evangelical:0, pentecostal:0, solo:0 };
+let answers = [];
+let lastResult = null;
+
+const letters = ['A', 'B', 'C', 'D'];
+
+function startQuiz() {
+  currentQ = 0;
+  scores = { catholic:0, orthodox:0, anglican:0, lutheran:0, reformed:0, evangelical:0, pentecostal:0, solo:0 };
+  answers = [];
+  show('screen-quiz');
+  renderQuestion();
+}
+
+function show(id) {
+  ['screen-intro','screen-quiz','screen-result','screen-all'].forEach(s => {
+    document.getElementById(s).classList.add('hidden');
+  });
+  document.getElementById(id).classList.remove('hidden');
+}
+
+function renderQuestion() {
+  const q = questions[currentQ];
+  const pct = (currentQ / questions.length) * 100;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = `${currentQ} / ${questions.length}`;
+  document.getElementById('q-number').textContent = `Question ${currentQ + 1}`;
+  document.getElementById('q-text').textContent = q.text;
+  document.getElementById('q-sub').textContent = q.sub;
+
+  const card = document.getElementById('question-card');
+  card.style.animation = 'none';
+  void card.offsetWidth;
+  card.style.animation = 'slideUp 0.4s cubic-bezier(0.4,0,0.2,1) both';
+
+  const opts = document.getElementById('options');
+  opts.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span class="option-text">${opt.text}</span>`;
+    btn.onclick = () => selectOption(i, opt.scores);
+    opts.appendChild(btn);
+  });
+}
+
+function selectOption(idx, optScores) {
+  // Disable all buttons briefly
+  document.querySelectorAll('.option-btn').forEach(b => b.style.pointerEvents = 'none');
+
+  Object.entries(optScores).forEach(([key, val]) => {
+    scores[key] = (scores[key] || 0) + val;
+  });
+  answers.push(idx);
+  currentQ++;
+
+  if (currentQ >= questions.length) {
+    setTimeout(showResult, 300);
+  } else {
+    setTimeout(() => {
+      renderQuestion();
+      document.querySelectorAll('.option-btn').forEach(b => b.style.pointerEvents = '');
+    }, 200);
+  }
+}
+
+function showResult() {
+  // Find top denomination
+  const sorted = Object.entries(scores).sort((a,b) => b[1]-a[1]);
+  const topKey = sorted[0][0];
+  const d = denominations[topKey];
+  lastResult = topKey;
+
+  document.getElementById('result-icon').textContent = d.icon;
+  document.getElementById('result-name').textContent = d.name;
+  document.getElementById('result-tagline').textContent = d.tagline;
+  document.getElementById('result-desc').textContent = d.desc;
+
+  // Tags
+  const tagsEl = document.getElementById('result-tags');
+  tagsEl.innerHTML = d.tags.map(t => `<span class="tag">${t}</span>`).join('');
+
+  // Score bars
+  const barsEl = document.getElementById('score-bars');
+  const maxScore = sorted[0][1] || 1;
+  const denomNames = {
+    catholic:'カトリック', orthodox:'東方正教', anglican:'聖公会',
+    lutheran:'ルーテル', reformed:'改革派', evangelical:'福音派',
+    pentecostal:'ペンテコステ', solo:'独学スタイル'
+  };
+  const barColors = {
+    catholic:'#4a6e8a', orthodox:'#8a6a4a', anglican:'#2d5a3d',
+    lutheran:'#7a5a3d', reformed:'#3d4a7a', evangelical:'#7a6a3d',
+    pentecostal:'#7a3d3d', solo:'#5a5a5a'
+  };
+
+  barsEl.innerHTML = sorted.map(([key, val]) => {
+    const pct = Math.round((val / maxScore) * 100);
+    return `
+      <div class="score-bar-row">
+        <span class="score-bar-label">${denomNames[key]}</span>
+        <div class="score-bar-track">
+          <div class="score-bar-fill" style="width:0%;background:${barColors[key]}" data-target="${pct}"></div>
+        </div>
+        <span class="score-bar-val">${pct}%</span>
+      </div>`;
+  }).join('');
+
+  // Steps
+  const stepsEl = document.getElementById('next-steps');
+  stepsEl.innerHTML = d.steps.map(s => `<li>${s}</li>`).join('');
+
+  document.getElementById('progress-fill').style.width = '100%';
+  document.getElementById('progress-label').textContent = `${questions.length} / ${questions.length}`;
+
+  show('screen-result');
+
+  // Animate bars after render
+  setTimeout(() => {
+    document.querySelectorAll('.score-bar-fill').forEach(el => {
+      el.style.transition = 'width 1s cubic-bezier(0.4,0,0.2,1)';
+      el.style.width = el.dataset.target + '%';
+    });
+  }, 200);
+}
+
+function restartQuiz() {
+  show('screen-intro');
+}
+
+function showAllDenominations() {
+  const container = document.getElementById('all-denom-content');
+  container.innerHTML = Object.entries(denominations).map(([key, d]) => `
+    <div class="card screen" style="margin-bottom:20px; border-color: ${d.color}40;">
+      <div style="display:flex; gap:16px; align-items:flex-start; margin-bottom:16px;">
+        <span style="font-size:32px; opacity:0.8">${d.icon}</span>
+        <div>
+          <p style="font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:400; color:var(--parchment)">${d.name}</p>
+          <p style="font-family:'Noto Serif JP',serif; font-size:12px; color:${d.color}; margin-top:4px; opacity:0.9">${d.tagline}</p>
+        </div>
+      </div>
+      <p style="font-family:'Noto Sans JP',sans-serif; font-size:13px; font-weight:300; line-height:1.8; color:rgba(240,232,218,0.65); margin-bottom:14px; letter-spacing:0.03em">${d.desc}</p>
+      <div style="display:flex; flex-wrap:wrap; gap:6px">
+        ${d.tags.map(t => `<span class="tag" style="border-color:${d.color}50; color:${d.color}">${t}</span>`).join('')}
+      </div>
+    </div>
+  `).join('');
+  show('screen-all');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function backToResult() {
+  show('screen-result');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
