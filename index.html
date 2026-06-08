@@ -1135,12 +1135,14 @@ function showResult() {
   const denomNames = {
     catholic:'カトリック', orthodox:'東方正教', anglican:'聖公会',
     lutheran:'ルーテル', reformed:'改革派', evangelical:'福音派',
-    pentecostal:'ペンテコステ', solo:'独学スタイル'
+    pentecostal:'ペンテコステ', solo:'独学スタイル',
+    baptist:'バプテスト', methodist:'メソジスト', congregational:'組合派'
   };
   const barColors = {
     catholic:'#4a6e8a', orthodox:'#8a6a4a', anglican:'#2d5a3d',
     lutheran:'#7a5a3d', reformed:'#3d4a7a', evangelical:'#7a6a3d',
-    pentecostal:'#7a3d3d', solo:'#5a5a5a'
+    pentecostal:'#7a3d3d', solo:'#5a5a5a',
+    baptist:'#5a6e3d', methodist:'#6e5a2d', congregational:'#3d5a6e'
   };
 
   barsEl.innerHTML = sorted.map(([key, val]) => {
