@@ -25,6 +25,9 @@
   --c-evangelical: #7a6a3d;
   --c-pentecostal: #8a3d3d;
   --c-solo: #5a5a5a;
+  --c-baptist: #5a6e3d;
+  --c-methodist: #6e5a2d;
+  --c-congregational: #3d5a6e;
 }
 
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -122,7 +125,7 @@ body {
 /* DENOMINATION HEADER ROW */
 .denom-header {
   display: grid;
-  grid-template-columns: 200px repeat(8, 1fr);
+  grid-template-columns: 200px repeat(11, 1fr);
   gap: 0;
   margin-bottom: 2px;
   position: sticky; top: 0; z-index: 10;
@@ -156,7 +159,7 @@ body {
 /* MATRIX ROW */
 .matrix-row {
   display: grid;
-  grid-template-columns: 200px repeat(8, 1fr);
+  grid-template-columns: 200px repeat(11, 1fr);
   gap: 0;
   border-bottom: 1px solid rgba(184,149,106,0.07);
   transition: background 0.15s;
@@ -254,8 +257,8 @@ body {
 
 /* RESPONSIVE */
 @media (max-width: 700px) {
-  .denom-header { grid-template-columns: 120px repeat(8, 1fr); }
-  .matrix-row { grid-template-columns: 120px repeat(8, 1fr); }
+  .denom-header { grid-template-columns: 120px repeat(11, 1fr); }
+  .matrix-row { grid-template-columns: 120px repeat(11, 1fr); }
   .row-label-main { font-size: 11px; }
   .denom-header-cell .denom-abbr { display: none; }
   .star { width: 6px; height: 6px; }
@@ -303,7 +306,7 @@ body {
   <header class="page-header">
     <p class="eyebrow">Doctrine Comparison Matrix</p>
     <h1 class="page-title">教義<em>近接度</em>マトリクス</h1>
-    <p class="page-sub">10の神学的テーマで、8宗派の立場を横断比較する</p>
+    <p class="page-sub">10の神学的テーマで、11宗派の立場を横断比較する</p>
   </header>
 
   <!-- FILTER -->
@@ -321,6 +324,9 @@ body {
     <div class="denom-header-cell"><span class="denom-icon">✙</span><span class="denom-abbr">福音派</span></div>
     <div class="denom-header-cell"><span class="denom-icon">🔥</span><span class="denom-abbr">ペンテコステ</span></div>
     <div class="denom-header-cell"><span class="denom-icon">📖</span><span class="denom-abbr">独学</span></div>
+    <div class="denom-header-cell"><span class="denom-icon">🕊</span><span class="denom-abbr">バプテスト</span></div>
+    <div class="denom-header-cell"><span class="denom-icon">🕯</span><span class="denom-abbr">メソジスト</span></div>
+    <div class="denom-header-cell"><span class="denom-icon">🤝</span><span class="denom-abbr">組合派</span></div>
   </div>
 
   <!-- MATRIX -->
@@ -336,6 +342,9 @@ body {
     <div class="legend-item"><div class="legend-dot" style="background:var(--c-evangelical)"></div><span class="legend-label">福音派</span></div>
     <div class="legend-item"><div class="legend-dot" style="background:var(--c-pentecostal)"></div><span class="legend-label">ペンテコステ</span></div>
     <div class="legend-item"><div class="legend-dot" style="background:var(--c-solo)"></div><span class="legend-label">独学スタイル</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--c-baptist)"></div><span class="legend-label">バプテスト派</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--c-methodist)"></div><span class="legend-label">メソジスト派</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--c-congregational)"></div><span class="legend-label">組合派</span></div>
   </div>
 
   <div style="text-align:center">
@@ -359,7 +368,7 @@ const colors = {
   pentecostal: 'var(--c-pentecostal)',
   solo:        'var(--c-solo)',
 };
-const denomKeys = ['catholic','orthodox','anglican','lutheran','reformed','evangelical','pentecostal','solo'];
+const denomKeys = ['catholic','orthodox','anglican','lutheran','reformed','evangelical','pentecostal','solo','baptist','methodist','congregational'];
 
 // ===== MATRIX DATA =====
 // scores: 1-5, tooltip: short explanation per denomination
@@ -380,6 +389,9 @@ const themes = [
           evangelical: { val: 4, note: "霊的戦いを現実として意識。悪魔の働きを日常信仰の中で語ることが多い" },
           pentecostal: { val: 5, note: "悪霊追い出し・霊的戦いを礼拝・実践の中心的要素として積極的に取り組む" },
           solo:        { val: 1, note: "悪魔言語に距離を置く傾向が高い。象徴・神話として読む" },
+          baptist:     { val: 3, note: "悪魔の存在を聖書的に認める。霊的戦いへの意識は強いが、ペンテコステほど儀式的でない" },
+          methodist:   { val: 2, note: "悪の存在を認めるが、社会的・構造的な悪への取り組みを重視する傾向が強い" },
+          congregational: { val: 1, note: "神話的・象徴的読みを許容する神学的自由があり、文字通りの悪魔論は強調しない" },
         }
       },
       {
@@ -395,6 +407,9 @@ const themes = [
           evangelical: { val: 3, note: "教派により幅がある。奇跡を認めるが、感情的過剰には慎重な層も多い" },
           pentecostal: { val: 5, note: "異言・預言・癒しを現在も継続する聖霊の賜物として礼拝の中心に置く" },
           solo:        { val: 1, note: "超自然体験より知的・文献的なアプローチを好む傾向" },
+          baptist:     { val: 2, note: "奇跡を否定しないが、聖書の証言を中心に据える。体験的熱狂より落ち着いた信仰を重視" },
+          methodist:   { val: 3, note: "ウェスレーは癒しの祈りを実践した。現代でも聖霊の働きを認める開かれた姿勢" },
+          congregational: { val: 1, note: "超自然的体験より理性的・文脈的な信仰理解を重視する傾向が強い" },
         }
       },
       {
@@ -410,6 +425,9 @@ const themes = [
           evangelical: { val: 4, note: "携挙・患難期・千年王国など終末シナリオへの関心が高い。ハル・リンゼイ的伝統" },
           pentecostal: { val: 5, note: "今が終末の時という確信が強い。聖霊の注ぎは再臨の前兆として解釈される" },
           solo:        { val: 1, note: "終末論よりも現在の倫理・実践に関心が向く" },
+          baptist:     { val: 3, note: "終末への関心は高い。個人の回心と来世の希望を信仰の動機として重視する層が多い" },
+          methodist:   { val: 2, note: "再臨を信じるが終末スケジュールへの熱気より現在の社会変革を優先する傾向" },
+          congregational: { val: 1, note: "終末論より現在の共同体倫理と社会への責任に重きを置く" },
         }
       },
     ]
@@ -430,6 +448,9 @@ const themes = [
           evangelical: { val: 4, note: "聖書の権威と無誤性を重視。ただし歴史批評への態度は保守〜中道で幅がある" },
           pentecostal: { val: 4, note: "聖書の権威を強く認めつつ、聖霊の直接啓示も並置する。体験が解釈を補う" },
           solo:        { val: 3, note: "聖書を重要な文献として読むが、特定の解釈規範に縛られない独学的姿勢" },
+          baptist:     { val: 5, note: "聖書のみの権威を最も徹底する宗派の一つ。各信者が直接聖書を読む権利（霊的祭司職）を重視" },
+          methodist:   { val: 3, note: "聖書・伝統・理性・体験の「ウェスレー四辺形」が権威の根拠。聖書が最高だが理性も重要" },
+          congregational: { val: 3, note: "聖書を重視しつつ、共同体による解釈と理性的批判を許容する" },
         }
       },
       {
@@ -445,6 +466,9 @@ const themes = [
           evangelical: { val: 2, note: "アルミニウス主義（自由意志）が多数派。改革派的福音主義も少数いる" },
           pentecostal: { val: 1, note: "予定説よりも聖霊の招きへの個人の応答を重視するアルミニウス主義的立場" },
           solo:        { val: 1, note: "予定説は難しい概念として距離を置くか、保留する傾向" },
+          baptist:     { val: 2, note: "カルヴァン的バプテスト（改革派バプテスト）と自由意志バプテストに分かれる。一概に言えない" },
+          methodist:   { val: 1, note: "アルミニウス主義を明確に採用。すべての人が救われうるという万人救済論が基本" },
+          congregational: { val: 1, note: "神学的自由を重んじるため予定説への拘束は少ない。各自の理解を尊重" },
         }
       },
       {
@@ -460,6 +484,9 @@ const themes = [
           evangelical: { val: 3, note: "ティム・ケラー、C.S.ルイス受容。知的弁証論も発達するが実践重視の層も多い" },
           pentecostal: { val: 1, note: "体験・直観・賜物を優先。神学的学問より聖霊の働きへの敏感さを重視する" },
           solo:        { val: 4, note: "独学でカルト・バルト・ルイスなどを読む。組織神学より思想史的アプローチ" },
+          baptist:     { val: 3, note: "バプテスト神学校の伝統は豊か。スポルジョン、バニヤンなどの古典的著作が豊富" },
+          methodist:   { val: 4, note: "ウェスレー神学・組織神学の伝統が厚い。社会福音神学（ラウシェンブッシュなど）も含む" },
+          congregational: { val: 4, note: "ハーバード大学・イェール大学はもと会衆派の神学校。知的・自由主義神学の伝統が深い" },
         }
       },
     ]
@@ -480,6 +507,9 @@ const themes = [
           evangelical: { val: 2, note: "典礼より自発的・温かい雰囲気を重視。コンテンポラリー礼拝が主流" },
           pentecostal: { val: 2, note: "形式より聖霊の自由な動きを優先。形式が霊を縛ると考える傾向がある" },
           solo:        { val: 3, note: "典礼の美しさは評価するが参加義務は感じない。複数宗派を訪問して体験する" },
+          baptist:     { val: 1, note: "シンプルな礼拝を重視。説教・聖書朗読・賛美が中心。典礼的要素は最小限" },
+          methodist:   { val: 2, note: "ウェスレーは賛美歌（弟チャールズ・ウェスレー作詞）を重視。礼拝音楽の伝統は豊かだが典礼は簡素" },
+          congregational: { val: 2, note: "典礼より会衆の自発的参加を重視。シンプルな礼拝形式が基本" },
         }
       },
       {
@@ -495,6 +525,9 @@ const themes = [
           evangelical: { val: 3, note: "共同体は重要だが個人の回心体験が中心。小グループ参加が入門の王道" },
           pentecostal: { val: 4, note: "熱い共同体。ホームセル・祈祷会への密な関与を求める文化" },
           solo:        { val: 1, note: "組織への帰属を急がない。「巡礼者」として複数の教会を訪問しながら探索する" },
+          baptist:     { val: 3, note: "信者洗礼を経て正式に教会員になる仕組みが明確。礼拝と小グループへの参与が中心" },
+          methodist:   { val: 3, note: "ウェスレーのクラスミーティング（小グループ）の伝統。共同体での相互励ましを重視" },
+          congregational: { val: 3, note: "共同体の合意が教会の中心。会員として意思決定に参加することが求められる" },
         }
       },
       {
@@ -510,6 +543,9 @@ const themes = [
           evangelical: { val: 3, note: "個人救済優先だが、社会参与を重視する「社会的福音派」の流れもある" },
           pentecostal: { val: 2, note: "宣教・霊的戦いを優先。社会参与より個人の回心と霊的成長を重視する傾向" },
           solo:        { val: 3, note: "社会的倫理への関心は高いが、組織的な社会参与より個人的実践に留まる" },
+          baptist:     { val: 3, note: "南部バプテストは保守的だが、日本バプテスト連盟は平和・人権・反差別活動に積極的" },
+          methodist:   { val: 5, note: "社会参与はウェスレーの核心。禁酒運動・労働運動・医療・教育改革の歴史的担い手" },
+          congregational: { val: 4, note: "会衆派は奴隷制廃止運動・公民権運動の歴史的な担い手。社会変革への使命感が強い" },
         }
       },
     ]
@@ -530,6 +566,9 @@ const themes = [
           evangelical: { val: 2, note: "保守派が多数。「平等主義」vs「相補主義」の議論が継続中" },
           pentecostal: { val: 3, note: "「賜物・召命があれば性別は問わない」という論理で女性説教者が比較的多い" },
           solo:        { val: 4, note: "女性聖職者に肯定的な傾向。ガラテヤ3:28的な平等主義に親和性が高い" },
+          baptist:     { val: 2, note: "教派により大きく異なる。日本バプテスト連盟は女性牧師を認める。南部系は反対が多い" },
+          methodist:   { val: 5, note: "1956年から女性の完全な叙任を認める。歴史的に女性リーダーが多い宗派" },
+          congregational: { val: 5, note: "会衆の合意を重視する原則から、女性聖職者を当然のこととして受け入れる" },
         }
       },
       {
@@ -545,6 +584,9 @@ const themes = [
           evangelical: { val: 1, note: "保守的立場が多数。ただし「愛は認めつつ行為を認めない」という議論もある" },
           pentecostal: { val: 1, note: "保守的。聖霊体験重視だが倫理的立場は保守的な聖書観に基づく" },
           solo:        { val: 4, note: "個人の良心の領域と捉える傾向が高い。教会の裁きへの懐疑を持つ" },
+          baptist:     { val: 2, note: "教派により分かれる。日本バプテスト連盟はLGBTQへの包摂的議論が進んでいる" },
+          methodist:   { val: 3, note: "世界的には分裂を経験。日本のメソジスト系教会は包摂的な方向に動いている" },
+          congregational: { val: 4, note: "神学的自由と各教会の自治を重んじるため、包摂的な立場をとる教会が多い" },
         }
       },
     ]

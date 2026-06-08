@@ -561,7 +561,7 @@
   <header class="site-header">
     <p class="eyebrow">Christianity Navigator</p>
     <h1>キリスト教<br><span>入門ナビ</span></h1>
-    <p class="subtitle">15の問いで、あなたの信仰スタイルを探る</p>
+    <p class="subtitle">最大18の問いで、あなたの信仰スタイルを探る</p>
   </header>
 
   <!-- INTRO SCREEN -->
@@ -571,7 +571,7 @@
     <p class="intro-body">
       カトリック、プロテスタント、東方正教会——<br>
       それぞれに異なる礼拝の形、神学の強調点、共同体の文化がある。<br><br>
-      15の問いに答えることで、あなたの気質・関心・学び方に<br>
+      最大18の問いに答えることで、あなたの気質・関心・学び方に<br>
       最も共鳴する宗派と入門スタイルを提示します。<br><br>
       正解も不正解もありません。<br>
       直感で選んでください。
@@ -647,7 +647,7 @@ const questions = [
     sub: "何を信仰の判断基準にするか、という問いです。",
     options: [
       { text: "聖書＋使徒から連なる教会の伝統（マジステリウム）の両方", scores: { catholic: 3, orthodox: 2 } },
-      { text: "聖書のみ（Sola Scriptura）—— 個人が直接聖書を読んで判断する", scores: { evangelical: 3, reformed: 3, lutheran: 2, solo: 2 } },
+      { text: "聖書のみ（Sola Scriptura）—— 個人が直接聖書を読んで判断する", scores: { evangelical: 3, reformed: 3, lutheran: 2, solo: 2, baptist: 3 } },
       { text: "聖書と長い歴史的伝統のバランス。どちらも無視できない", scores: { anglican: 3, lutheran: 2 } },
       { text: "聖書＋聖霊の直接的な導き・体験", scores: { pentecostal: 3, evangelical: 1 } },
     ]
@@ -677,7 +677,7 @@ const questions = [
     sub: "信仰生活に他者がどれほど必要か。",
     options: [
       { text: "深く関与したい。洗礼準備、成人式（堅信礼）など段階的に受け入れられる共同体に入りたい", scores: { catholic: 3, orthodox: 3, anglican: 1 } },
-      { text: "中程度。週1礼拝と小グループ程度なら参加できる", scores: { evangelical: 2, lutheran: 2, anglican: 2 } },
+      { text: "中程度。週1礼拝と小グループ程度なら参加できる", scores: { evangelical: 2, lutheran: 2, anglican: 2, methodist: 2, baptist: 2, congregational: 2 } },
       { text: "熱い共同体。一緒に祈り、歌い、御霊の働きを体験する場", scores: { pentecostal: 3 } },
       { text: "最小限。信仰は個人のものであり、組織への帰属は重くしたくない", scores: { solo: 3, reformed: 1 } },
     ]
@@ -688,7 +688,7 @@ const questions = [
     options: [
       { text: "すっきりする。神の主権が絶対であることは信仰の基盤になる", scores: { reformed: 3 } },
       { text: "難しい概念だが、神の恵みの絶対性という意味では共感する", scores: { lutheran: 2, reformed: 1 } },
-      { text: "違和感がある。人の自由意志と神の招きの協働を信じたい", scores: { catholic: 2, orthodox: 2, evangelical: 1, pentecostal: 1 } },
+      { text: "違和感がある。人の自由意志と神の招きの協働を信じたい", scores: { catholic: 2, orthodox: 2, evangelical: 1, pentecostal: 1, methodist: 3 } },
       { text: "よく分からないので保留", scores: { solo: 1, anglican: 1 } },
     ]
   },
@@ -706,7 +706,7 @@ const questions = [
     text: "社会問題（貧困・環境・移民など）と信仰の関係は？",
     sub: "キリスト教がどのように社会と向き合うべきか。",
     options: [
-      { text: "社会正義は信仰の核心。教会は世界を変える使命がある（解放神学的）", scores: { catholic: 3, evangelical: 1, reformed: 1 } },
+      { text: "社会正義は信仰の核心。教会は世界を変える使命がある（解放神学的）", scores: { catholic: 3, evangelical: 1, reformed: 1, methodist: 3, congregational: 2 } },
       { text: "個人の救済が先。社会参与は大切だが神学の中心ではない", scores: { evangelical: 2, lutheran: 1, reformed: 1 } },
       { text: "伝統と秩序を重んじつつ、慈善・奉仕活動で社会に関わる", scores: { anglican: 2, lutheran: 2, catholic: 1 } },
       { text: "社会より霊的な戦いと宣教が優先", scores: { pentecostal: 3, evangelical: 1 } },
@@ -728,7 +728,7 @@ const questions = [
     options: [
       { text: "RCIA（カトリック入門講座）など、段階的な学びと儀式のプロセスを経て入信したい", scores: { catholic: 3, orthodox: 2 } },
       { text: "英語・日本語問わず古典神学書を独学で読み、自分のペースで信仰を構築したい", scores: { reformed: 3, solo: 2, lutheran: 1 } },
-      { text: "アルファコースや聖書勉強会に参加し、対話しながら学びたい", scores: { evangelical: 3, anglican: 2 } },
+      { text: "アルファコースや聖書勉強会に参加し、対話しながら学びたい", scores: { evangelical: 3, anglican: 2, baptist: 2, methodist: 1 } },
       { text: "礼拝や祈り会に足を運び、体験から信仰を理解していきたい", scores: { pentecostal: 3, orthodox: 1, evangelical: 1 } },
     ]
   },
@@ -767,7 +767,7 @@ const questions = [
     sub: "正解を求める問いではありません。どの「論理」に最も共鳴するかを選んでください。",
     options: [
       { text: "聖書と自然法に基づき、婚姻は男女間のものと定義される。これは変えられない教義", scores: { catholic: 2, orthodox: 3, evangelical: 2, pentecostal: 2 } },
-      { text: "聖書の記述は重要だが、文化的文脈の読み直しが必要。愛と包摂を優先したい", scores: { anglican: 3, lutheran: 2, solo: 1 } },
+      { text: "聖書の記述は重要だが、文化的文脈の読み直しが必要。愛と包摂を優先したい", scores: { anglican: 3, lutheran: 2, solo: 1, methodist: 2, congregational: 3 } },
       { text: "信仰と性の問題は個人の良心の領域。教会が一律に裁くべきではない", scores: { solo: 3, anglican: 1, reformed: 1 } },
       { text: "まだ自分の中で答えが出ていない。様々な神学的立場を学んでいる段階", scores: { solo: 2, lutheran: 1, reformed: 1 } },
     ]
@@ -778,8 +778,28 @@ const questions = [
     options: [
       { text: "司祭職はキリストの男性性を体現するもの。女性の叙階は神学的に不可能", scores: { catholic: 3, orthodox: 3 } },
       { text: "聖書の文脈では男性リーダーシップが示されており、今も守るべき秩序だと思う", scores: { evangelical: 3, reformed: 2, pentecostal: 1 } },
-      { text: "ガラテヤ3:28（男も女もない）の原則から、女性聖職者は当然の帰結", scores: { anglican: 3, lutheran: 3 } },
+      { text: "ガラテヤ3:28（男も女もない）の原則から、女性聖職者は当然の帰結", scores: { anglican: 3, lutheran: 3, methodist: 3, congregational: 3 } },
       { text: "性別より賜物・召命が基準。神が召したなら性別は問わない", scores: { pentecostal: 2, evangelical: 1, solo: 2 } },
+    ]
+  },
+  {
+    text: "洗礼はいつ受けるべきだと思いますか？",
+    sub: "キリスト教では洗礼の「対象」と「時期」について宗派ごとに考え方が異なります。",
+    options: [
+      { text: "幼児期に、親の信仰のもとで受けるべき。共同体に迎え入れられることが大切", scores: { catholic: 3, orthodox: 2, lutheran: 3, anglican: 2, methodist: 2 } },
+      { text: "自分で信仰を告白できる年齢になってから、自分の意志で受けるべき", scores: { baptist: 5, evangelical: 2, pentecostal: 1 } },
+      { text: "洗礼の形式より、信仰の内実が大切。どちらでも構わない", scores: { congregational: 2, solo: 2, reformed: 1 } },
+      { text: "まだ考えていない段階", scores: { solo: 2 } },
+    ]
+  },
+  {
+    text: "教会はどのように運営されるべきだと思いますか？",
+    sub: "信仰共同体の意思決定の仕組みについて、しっくりくるものを選んでください。",
+    options: [
+      { text: "教皇・司教による階層的な権威のもとで。歴史的継承と統一性が大切", scores: { catholic: 3, orthodox: 3 } },
+      { text: "選ばれた長老・牧師による代議制で。規律と教義の一貫性を保ちたい", scores: { reformed: 3, lutheran: 1, anglican: 1 } },
+      { text: "会衆全員の合意と自治で。各教会が独立して決定できることが重要", scores: { congregational: 5, baptist: 3 } },
+      { text: "監督者（ビショップ）が全体を調整しつつ、現場の柔軟性も大切にする", scores: { methodist: 3, anglican: 2 } },
     ]
   }
 ];
@@ -898,6 +918,54 @@ const denominations = {
       "Hillsong、Bethel Musicなどのワーシップミュージックで聖霊礼拝に親しむ",
     ]
   },
+  baptist: {
+    name: "バプテスト派",
+    tagline: "—— 信者洗礼と教会の自治",
+    icon: "🕊",
+    color: "#5a6e3d",
+    desc: "「信者洗礼（Believer's Baptism）」——自分で信仰を告白した人だけが洗礼を受ける——が最大の特徴。各教会の独立自治を重んじ、クリード（信条）より聖書そのものを権威とする。福音派と重なる部分が多いが、洗礼論と教会論で明確に独自の立場を持つ。日本ではバプテスト連盟など。",
+    tags: ["信者洗礼", "教会の自治", "聖書主義", "個人の回心", "シンプルな礼拝"],
+    url: "https://www.jbf.ne.jp/",
+    urlLabel: "日本バプテスト連盟",
+    steps: [
+      "日本バプテスト連盟または日本バプテスト教会連合の近隣教会を探して礼拝に参加する",
+      "読書：ジョン・バニヤン『天路歴程』——バプテスト的信仰の古典",
+      "洗礼（浸礼）の意味について牧師と対話する機会を作る",
+      "聖書通読から始める。YouVersion Bible Appが便利",
+    ]
+  },
+  methodist: {
+    name: "メソジスト派",
+    tagline: "—— 社会的敬虔と万人への恵み",
+    icon: "🕯",
+    color: "#6e5a2d",
+    desc: "ジョン・ウェスレーの「メソド（規律ある信仰実践）」から生まれた宗派。すべての人が救われうるという万人救済論（アルミニウス主義）と、信仰後の「聖化（罪から自由になるプロセス）」を強調する。禁酒運動・医療・教育など社会改革との結びつきが歴史的に強い。日本ではウェスレアン・ホーリネス教団など。",
+    tags: ["万人救済論", "社会的敬虔", "聖化の強調", "規律ある信仰", "監督制"],
+    url: "https://www.uccj.org/",
+    urlLabel: "日本基督教団（メソジスト系含む）",
+    steps: [
+      "日本基督教団（メソジスト系の流れを汲む教会多数）または日本ウェスレアン・ホーリネス教団を探す",
+      "読書：ジョン・ウェスレー『標準説教集』または入門書として『ウェスレーの神学』",
+      "社会参与活動（ボランティア・福祉）が活発な教会を選ぶと動機と一致しやすい",
+      "東京YMCA山手センター（高田馬場）——メソジスト精神を引き継ぐ社会活動の場",
+    ]
+  },
+  congregational: {
+    name: "組合派（会衆派）",
+    tagline: "—— 各教会の自治と神学的自由",
+    icon: "🤝",
+    color: "#3d5a6e",
+    desc: "各地の教会が完全に自治・独立して運営される「会衆制」が特徴。信条より共同体の合意を重視し、神学的に最も広い幅を持つ。日本では日本基督教団の主要な母体の一つ。リベラルな神学的探究と社会参与を重視する人に向く。",
+    tags: ["教会の自治", "信条より合意", "神学的自由", "リベラル神学", "社会参与"],
+    url: "https://uccj.org/",
+    urlLabel: "日本基督教団",
+    steps: [
+      "日本基督教団の近隣教会を探して礼拝に参加する（会衆派の流れを汲む教会が多い）",
+      "読書：老松克博『会衆派の神学』または日本基督教団の入門資料",
+      "神学的に開かれた雰囲気の教会が多いので、牧師に率直に疑問をぶつけてみる",
+      "読書・議論を重視する聖書研究会への参加から始める",
+    ]
+  },
   solo: {
     name: "独学・個人帰依スタイル",
     tagline: "—— 組織より先に、まず神と向き合う",
@@ -918,7 +986,7 @@ const denominations = {
 
 // ===== STATE =====
 let currentQ = 0;
-let scores = { catholic:0, orthodox:0, anglican:0, lutheran:0, reformed:0, evangelical:0, pentecostal:0, solo:0 };
+let scores = { catholic:0, orthodox:0, anglican:0, lutheran:0, reformed:0, evangelical:0, pentecostal:0, solo:0, baptist:0, methodist:0, congregational:0 };
 let answers = [];
 let lastResult = null;
 
@@ -964,8 +1032,29 @@ function renderQuestion() {
   });
 }
 
+// 条件分岐設問Q18（メソジスト識別用）
+const bonusQuestion = {
+  text: "仮に、あなたが「信仰を持った」としましょう。その後の信仰生活のイメージとして、しっくりくるのはどれですか？",
+  sub: "直感で構いません。まだ信仰を持っていない方も、想像で選んでみてください。",
+  isBonus: true,
+  options: [
+    { text: "洗礼・聖体・告解など、儀式を繰り返し受けながら神の恵みの中で少しずつ変えられていく", scores: { catholic: 2, orthodox: 2 } },
+    { text: "聖霊の働きによって、罪の支配から根本的に自由になれる——そういう転換を期待したい", scores: { methodist: 4 } },
+    { text: "聖書を読み、祈り、日々悔い改める積み重ねの中で、少しずつ成長していく", scores: { lutheran: 2, reformed: 2, baptist: 1 } },
+    { text: "信仰を持つ決断をしたら、あとは感謝して誠実に生きることが信仰の中身", scores: { evangelical: 2, baptist: 1 } },
+  ]
+};
+
+let bonusShown = false;
+
+function needsBonusQuestion() {
+  // 暫定上位3派にAnglican・Lutheran・Methodistのいずれかが入っているか
+  const sorted = Object.entries(scores).sort((a,b) => b[1]-a[1]);
+  const top3 = sorted.slice(0,3).map(s => s[0]);
+  return top3.some(k => ['anglican','lutheran','methodist'].includes(k));
+}
+
 function selectOption(idx, optScores) {
-  // Disable all buttons briefly
   document.querySelectorAll('.option-btn').forEach(b => b.style.pointerEvents = 'none');
 
   Object.entries(optScores).forEach(([key, val]) => {
@@ -974,14 +1063,54 @@ function selectOption(idx, optScores) {
   answers.push(idx);
   currentQ++;
 
+  // 通常設問終了後、条件分岐チェック
   if (currentQ >= questions.length) {
-    setTimeout(showResult, 300);
+    if (!bonusShown && needsBonusQuestion()) {
+      bonusShown = true;
+      setTimeout(() => {
+        renderBonusQuestion();
+        document.querySelectorAll('.option-btn').forEach(b => b.style.pointerEvents = '');
+      }, 200);
+    } else {
+      setTimeout(showResult, 300);
+    }
   } else {
     setTimeout(() => {
       renderQuestion();
       document.querySelectorAll('.option-btn').forEach(b => b.style.pointerEvents = '');
     }, 200);
   }
+}
+
+function renderBonusQuestion() {
+  const q = bonusQuestion;
+  document.getElementById('progress-fill').style.width = '95%';
+  document.getElementById('progress-label').textContent = '追加質問';
+  document.getElementById('q-number').textContent = 'もう一問だけ';
+  document.getElementById('q-text').textContent = q.text;
+  document.getElementById('q-sub').textContent = q.sub;
+
+  const card = document.getElementById('question-card');
+  card.style.animation = 'none';
+  void card.offsetWidth;
+  card.style.animation = 'slideUp 0.4s cubic-bezier(0.4,0,0.2,1) both';
+
+  const opts = document.getElementById('options');
+  opts.innerHTML = '';
+  const letters = ['A','B','C','D'];
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span class="option-text">${opt.text}</span>`;
+    btn.onclick = () => {
+      document.querySelectorAll('.option-btn').forEach(b => b.style.pointerEvents = 'none');
+      Object.entries(opt.scores).forEach(([key, val]) => {
+        scores[key] = (scores[key] || 0) + val;
+      });
+      setTimeout(showResult, 300);
+    };
+    opts.appendChild(btn);
+  });
 }
 
 function showResult() {
